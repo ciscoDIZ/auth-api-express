@@ -95,5 +95,21 @@ explicados en su [documentación oficial](https://devcenter.heroku.com/articles/
 ![](https://raw.githubusercontent.com/ciscoDIZ/auth-api-express/master/img/1.png)
 
 Con heroku los procesos de CD/CI, además de poder codificar complejos scrips gracias a su cli y su fichero de configuración llamado Procfile, también pueden llevarse a cabo de forma visual sin perder funcionalidad. Tiene una GUI muy completa, en la que podremos definir nuestros pipelines a través de los dynos y tambien ejecutar test de integración en cada despliegue, eso si, activando la opción correspondiente en la configuración de nuestra cuenta y este servicio puede hacer cargos en nuestra cuenta, en mi caso me ha cobrado 1,19€ y he realizado al rededor de 12 despliegues con test de integración.
+
+
+Como ya tenemos una aplicación desplegada en heroku, lo unico que debemos hacer es dirigirnos al dashboard, pulsamos en el botón que pone new,![](https://raw.githubusercontent.com/ciscoDIZ/auth-api-express/master/img/7.png)  y seleccionamos la opción que dice create new pipeline. ![](https://raw.githubusercontent.com/ciscoDIZ/auth-api-express/master/img/8.png) Y se nos abrirá una ventana con un formulario simiral al descrito en la imagen, en el que definiremos el nombre del pipeline y el repositorio en el que se apoyará para realizar los despliegues, a estas alturas es mejor ya utilizar un repositorio en GitHub, ya que nos dará mayor control de los versionados.
+
+![](https://raw.githubusercontent.com/ciscoDIZ/auth-api-express/master/img/9.png)
+
+Una vez completada la configuración del pipline, y estableciendo un fichero Procfile con la siguiente línea en la raíz del repositorio:
+```
+web: npm start
+```
+
+El último paso de configuración seria activar la opción para que se ejecuten los test al hacer push al repositorio seleccionado en nustro pipeline, que encontraremos en las settings del mismo.
+
 <img style="width: 40vw;" src="https://raw.githubusercontent.com/ciscoDIZ/auth-api-express/master/img/6.png">
-Como ya tenemos una aplicación desplegada en heroku, lo unico que debemos hacer es dirigirnos al dashboard, pulsamos en el botón que pone new,![](https://raw.githubusercontent.com/ciscoDIZ/auth-api-express/master/img/7.png)  y seleccionamos la opción que dice create new pipeline. ![](https://raw.githubusercontent.com/ciscoDIZ/auth-api-express/master/img/8.png) 
+
+Después de añadir la aplicación creada anteriormente en el pipeline, ya podriamos hacer los push a nuestro repositorio nuestro GitHub y se ejecutarán los test de integración que hayas programado, en el caso de la app que te facilito se una mocha, una libreria js que se encarga de hacer peticiones a los endponits de la api para serciorarse de que es accesible.
+
+![](https://raw.githubusercontent.com/ciscoDIZ/auth-api-express/master/img/3.png)
