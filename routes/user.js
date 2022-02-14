@@ -14,5 +14,4 @@ api.get('/user/email/:email', UserController.findByEmail);
 api.get('/user', UserController.findAll);
 api.delete('/user/:id', auth, UserController.deleteById);
 api.put('/user/:id', auth, UserController.updateById);
-api.put('/user/update-avatar/:id',[auth, upload], UserController.updateAvatar)
 module.exports = api;
