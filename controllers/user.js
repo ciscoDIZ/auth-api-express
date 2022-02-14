@@ -61,7 +61,7 @@ const findAll = async (req, res) => {
 
 
     try {
-        const users = await User.paginate(filter,{limit, page});
+        const users = await User.find(filter)
         if (!users) {
             res.status(404).send(notFound('Users'));
             return;

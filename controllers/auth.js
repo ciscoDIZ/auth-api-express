@@ -7,17 +7,23 @@ const {encode, decode} = require('../services/jwt');
 
 const login = async (req, res) => {
     const {payload} = req.body;
-    console.log(payload)
     try {
         if(!payload) {
             res.status(400).send(badRequest('falta payload'));
             return;
         }
-        const user = await User.findOne({email: payload.email});
+        let user = await User.findOne({email: payload.email});
+        const {lastCacheAt, id} = user;
+
+        const lastCache = new Date(lastCacheAt);
+        const localDate = new Date();
+        if(localDate.getMonth() - lastCache.getMonth() >= 3) {
+           user = await User.findByIdAndUpdate(id, {activated: false});
+        }
         const {activated} = user;
         if (!activated) {
             res.status(401).send(badRequest('falta activación de cuenta'));
-            return
+            return;
         }
         if (!user) {
             res.status(400).send(badRequest('email o contraseña incorrectos'));
@@ -29,11 +35,10 @@ const login = async (req, res) => {
             res.status(400).send(badRequest('email o contraseña incorrectos'));
             return;
         }
-        const {id} = user;
+
         const authenticatedUser = await User.findByIdAndUpdate(id, {lastCacheAt: Date.now()}, {new: true});
-        payload.password = password
+
         const token = encode(authenticatedUser, '12h')
-        console.log(token)
         res.status(200).send({token, authenticatedUser});
     } catch (e) {
         res.status(500).send(internalServerError(e));
