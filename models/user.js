@@ -36,6 +36,10 @@ const UserSchema = new Schema(
             type: String,
             required: true
         },
+        avatar: {
+          type: String,
+          required: false
+        },
         createdAt: {
             type: Date,
             required: true,
@@ -56,6 +60,6 @@ const UserSchema = new Schema(
 
 UserSchema.plugin(mongoosePaginate)
 
-let User = mongoose.model('User', UserSchema);
+let User = new mongoose.model('User', UserSchema);
 
 module.exports =  User;

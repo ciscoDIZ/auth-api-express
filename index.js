@@ -2,7 +2,6 @@
 
 const app = require('./app');
 const mongoose = require('mongoose');
-const {GridFsStorage} = require('multer-gridfs-storage');
 
 mongoose.Promise = global.Promise;
 

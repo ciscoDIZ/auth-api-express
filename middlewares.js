@@ -1,7 +1,7 @@
 "use strict";
 const User = require('./models/user');
 const {decode} = require('./services/jwt');
-const multer = require('multer');
+const {PaginationParameters} = require('mongoose-paginate-v2');
 const response = (res, status, send) => {
     res.status(status).send({message: send});
 }
@@ -21,7 +21,7 @@ const auth = async (req, res, next) => {
     const payload = decode(token, API_SECRET);
     console.log(req.params.id)
     const user = await User.findById(reqId);
-    const {id, email} = user;
+    const {id, email, lastCacheAt} = user;
     if (!user) {
         response(res, 400, 'usuario no encontrado');
         return;
@@ -34,23 +34,11 @@ const auth = async (req, res, next) => {
         response(res, 409, 'payload conflictivo');
         return;
     }
+
     next();
 };
-const mongo_uri = `mongodb+srv://app-data.kq6vy.mongodb.net/?retryWrites=true&w=majority`;
-const storage = new GridFsStorage({
-    url: mongo_uri,
-    file: (req, file) => {
-        return new Promise((resolve, reject) => {
-            const filename = file.originalname;
-            const fileInfo = {
-                filename: filename,
-                bucketName: "newBucket"
-            };
-            resolve(fileInfo);
-        });
-    }
-});
-const upload = multer({storage})
+
+
 module.exports = {
-    auth, upload
+    auth
 }
