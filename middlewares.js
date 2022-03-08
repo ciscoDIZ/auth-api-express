@@ -1,7 +1,7 @@
 "use strict";
 const User = require('./models/user');
 const {decode} = require('./services/jwt');
-const {PaginationParameters} = require('mongoose-paginate-v2');
+
 const response = (res, status, send) => {
     res.status(status).send({message: send});
 }
@@ -22,8 +22,11 @@ const auth = async (req, res, next) => {
     console.log(req.params.id)
     const user = await User.findById(reqId);
     const {id, email, lastCacheAt} = user;
+
+    // TODO: 
+
     if (!user) {
-        response(res, 400, 'usuario no encontrado');
+        response(res, 404, 'not found user');
         return;
     }
     if (email !== payload.email) {

@@ -58,10 +58,13 @@ const findAll = async (req, res) => {
 
     const {name,limit,page} = req.query;
     const filter = (name) ? {name} : {};
+    const {options} = User.paginate;
 
-
+    options.page = (page) ? page : options.page;
+    options.limit = (limit) ? limit : options.limit;
+    
     try {
-        const users = await User.find(filter)
+        const users = await User.paginate(filter,options);
         if (!users) {
             res.status(404).send(notFound('Users'));
             return;
@@ -89,11 +92,12 @@ const updateById = async (req, res) => {
     const id = req.params.id;
     const {SALT_ROUND, SALT_MINOR} = req.app.locals.config;
     try {
-        const {name, surname, password} = req.body;
+        const {name, surname, password, role} = req.body;
         const update = {
             name,
             surname,
-            password
+            password,
+            role,
         }
         if (Object.entries(update) < 1) {
             res.status(400).send(badRequest('not empty'));

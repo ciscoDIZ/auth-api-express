@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 const Schema = mongoose.Schema;
-const myCustomLabels = {
+const customLabels = {
     totalDocs: 'total',
     docs: 'list',
     nextPage: 'next',
@@ -14,9 +14,11 @@ const myCustomLabels = {
     meta: 'pagination',
 }
 mongoosePaginate.paginate.options = {
-    limit: 10,
-    customLabels: myCustomLabels
+    limit: 5,
+    page: 1,
+    customLabels,
 }
+//console.log(mongoosePaginate.paginate.options)
 const UserSchema = new Schema(
     {
         name: {
@@ -39,6 +41,11 @@ const UserSchema = new Schema(
         avatar: {
           type: String,
           required: false
+        },
+        role: {
+            type: String,
+            enum: ['user', 'admin'],
+            default: 'user'
         },
         createdAt: {
             type: Date,
