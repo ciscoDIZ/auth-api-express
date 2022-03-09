@@ -1,5 +1,8 @@
 "use strict";
 
+const fs = require('fs');
+const path = require('path'); 
+
 const User = require('../models/user');
 const {notFound, internalServerError, badRequest} = require('../error');
 const bcrypt = require('bcryptjs');
@@ -119,11 +122,52 @@ const updateById = async (req, res) => {
     }
 };
 
+const uploadAvatar = async (req, res) => {
+    const { id } = req.params;
+    const { protocol, headers } = req;
+    try {
+        const user = await User.findById(id);
+        if (!user) {
+            res.status(404).send(notFound('User'));
+            return;
+        }
+        if (req.files) {
+            const [, fileName] = req.files.file.path.split('/');
+            const [, ext] = fileName.split('.');
+            if (ext !== 'png' && ext !== 'jpg') {
+                res.status(400).send(badRequest('la extensión debe ser .png o .jpg'));
+                return;
+            }
+
+            user.avatar = `${protocol}://${headers.host}/api/avatar/${fileName}`;
+
+            const updatedUser = await User.findByIdAndUpdate(id, user, {new: true}); 
+            res.status(201).send(updatedUser);
+        }
+    } catch (e) {
+        res.status(500).send(internalServerError(e));
+    } 
+};
+
+const getAvatar = (req, res) => {
+    const {name} = req.params;
+    const filePath = `./uploads/${name}`;
+    fs.stat(filePath, (err, stat) => {
+        if (err) {
+            res.status(404).send(notFound('file'));
+            return;
+        }
+        res.sendFile(path.resolve(filePath));
+    });
+};
+
 module.exports = {
     create,
     findById,
     findByEmail,
     findAll,
     deleteById,
-    updateById
+    updateById,
+    uploadAvatar,
+    getAvatar
 };

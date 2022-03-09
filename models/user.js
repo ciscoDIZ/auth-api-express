@@ -1,24 +1,11 @@
 "use strict";
 
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate-v2');
+const mongoosePaginate = require('../config/database');
+
 const Schema = mongoose.Schema;
-const customLabels = {
-    totalDocs: 'total',
-    docs: 'list',
-    nextPage: 'next',
-    prevPage: 'prev',
-    hasNextPage: 'hasNext',
-    hasPrevPage: 'hasPrev',
-    totalPages: 'pages',
-    meta: 'pagination',
-}
-mongoosePaginate.paginate.options = {
-    limit: 5,
-    page: 1,
-    customLabels,
-}
-//console.log(mongoosePaginate.paginate.options)
+
+
 const UserSchema = new Schema(
     {
         name: {

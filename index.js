@@ -22,8 +22,7 @@ mongoose.connect(DB_URI, {
         }
         console.log('conexión base de datos ok');
         const server = app.listen(PORT,() => {
-            console.log(server.address());
-            console.log(`Auth server listening at http://${server.address().address}:${PORT}`)
+            console.log(`Viviendas reales server listening at http://${server.address().address}:${PORT}`)
         });
     }catch (e) {
         console.log(e)

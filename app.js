@@ -14,6 +14,7 @@ app.set('env', SETTINGS.parsed.ENV);
 app.set('config', SETTINGS.parsed);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 

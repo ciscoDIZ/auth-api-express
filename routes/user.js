@@ -6,6 +6,7 @@ const multipart = require('connect-multiparty');
 
 const {auth} = require('../middlewares');
 const upload = multipart({uploadDir: './uploads'})
+
 const api = express.Router();
 
 api.post('/user', UserController.create);
@@ -14,4 +15,7 @@ api.get('/user/email/:email', UserController.findByEmail);
 api.get('/user', UserController.findAll);
 api.delete('/user/:id', auth, UserController.deleteById);
 api.put('/user/:id', auth, UserController.updateById);
+api.patch('/user/:id', [auth, upload], UserController.uploadAvatar);
+api.get('/avatar/:name', UserController.getAvatar)
+
 module.exports = api;
