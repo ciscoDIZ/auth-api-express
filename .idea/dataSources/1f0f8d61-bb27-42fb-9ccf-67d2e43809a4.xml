@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="auth@app-data.kq6vy.mongodb.net">
+  <database-model serializer="dbm" dbms="MONGO" family-id="MONGO" format-version="4.31">
+    <root id="1">
+      <ServerVersion>4.4.12</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="appdb"/>
+    <schema id="3" parent="1" name="auth">
+      <Current>1</Current>
+    </schema>
+    <schema id="4" parent="1" name="admin"/>
+    <schema id="5" parent="1" name="local"/>
+    <table id="6" parent="2" name="tasks"/>
+    <table id="7" parent="2" name="user"/>
+    <table id="8" parent="2" name="users"/>
+    <table id="9" parent="3" name="users"/>
+    <column id="10" parent="6" name="_id">
+      <DataType>ObjectId|12s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="11" parent="6" name="__v">
+      <DataType>Int32|4s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="12" parent="6" name="completed">
+      <DataType>Boolean|12s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="13" parent="6" name="title">
+      <DataType>String|12s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="14" parent="6" name="createdAt">
+      <DataType>ISODate|91s</DataType>
+      <Position>2</Position>
+    </column>
+    <column id="15" parent="6" name="description">
+      <DataType>String|12s</DataType>
+      <Position>3</Position>
+    </column>
+    <column id="16" parent="7" name="_id">
+      <DataType>ObjectId|12s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="17" parent="7" name="email">
+      <DataType>String|12s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="18" parent="7" name="password">
+      <DataType>String|12s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="19" parent="8" name="_id">
+      <DataType>ObjectId|12s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="20" parent="8" name="avatar">
+      <DataType>String|12s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="21" parent="8" name="email">
+      <DataType>String|12s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="22" parent="8" name="name">
+      <DataType>String|12s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="23" parent="8" name="surname">
+      <DataType>String|12s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="24" parent="8" name="__v">
+      <DataType>Int32|4s</DataType>
+      <Position>2</Position>
+    </column>
+    <column id="25" parent="8" name="password">
+      <DataType>String|12s</DataType>
+      <Position>2</Position>
+    </column>
+    <column id="26" parent="9" name="_id">
+      <DataType>ObjectId|12s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="27" parent="9" name="__v">
+      <DataType>Int32|4s</DataType>
+      <Position>2</Position>
+    </column>
+    <column id="28" parent="9" name="activated">
+      <DataType>Boolean|12s</DataType>
+      <Position>3</Position>
+    </column>
+    <column id="29" parent="9" name="createdAt">
+      <DataType>ISODate|91s</DataType>
+      <Position>4</Position>
+    </column>
+    <column id="30" parent="9" name="email">
+      <DataType>String|12s</DataType>
+      <Position>5</Position>
+    </column>
+    <column id="31" parent="9" name="lastCacheAt">
+      <DataType>ISODate|91s</DataType>
+      <Position>6</Position>
+    </column>
+    <column id="32" parent="9" name="name">
+      <DataType>String|12s</DataType>
+      <Position>7</Position>
+    </column>
+    <column id="33" parent="9" name="password">
+      <DataType>String|12s</DataType>
+      <Position>8</Position>
+    </column>
+    <column id="34" parent="9" name="surname">
+      <DataType>String|12s</DataType>
+      <Position>9</Position>
+    </column>
+  </database-model>
+</dataSource>

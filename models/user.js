@@ -5,7 +5,6 @@ const mongoosePaginate = require('../config/database');
 
 const Schema = mongoose.Schema;
 
-
 const UserSchema = new Schema(
     {
         name: {
@@ -54,6 +53,6 @@ const UserSchema = new Schema(
 
 UserSchema.plugin(mongoosePaginate)
 
-let User = new mongoose.model('User', UserSchema);
+const User = new mongoose.model('User', UserSchema);
 
 module.exports =  User;
