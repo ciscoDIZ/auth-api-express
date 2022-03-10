@@ -7,10 +7,10 @@ const User = require('../models/user');
 const {notFound, internalServerError, badRequest} = require('../error');
 const bcrypt = require('bcryptjs');
 
-const create = async (req, res) => {
+const create = (req, res) => {
     const {SALT_ROUND, SALT_MINOR} = req.app.locals.config
     try {
-        await bcrypt.genSalt(parseInt(SALT_ROUND), SALT_MINOR, (err, salt) => {
+         bcrypt.genSalt(parseInt(SALT_ROUND), SALT_MINOR, (err, salt) => {
             const data = req.body
             bcrypt.hash(data.password, salt, (err, hash) => {
                 data.password = hash;
