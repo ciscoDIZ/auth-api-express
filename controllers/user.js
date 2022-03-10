@@ -3,14 +3,18 @@
 const fs = require('fs');
 const path = require('path'); 
 
-const User = require('../models/user');
-const {notFound, internalServerError, badRequest} = require('../error');
 const bcrypt = require('bcryptjs');
 
-const create = async (req, res) => {
+const User = require('../models/user');
+const Housing = require('../models/housing');
+const getOptions = require('../utils/pagination');
+const { notFound, internalServerError, badRequest } = require('../error');
+
+
+const create = (req, res) => {
     const {SALT_ROUND, SALT_MINOR} = req.app.locals.config
     try {
-        await bcrypt.genSalt(parseInt(SALT_ROUND), SALT_MINOR, (err, salt) => {
+        bcrypt.genSalt(parseInt(SALT_ROUND), SALT_MINOR, (err, salt) => {
             const data = req.body
             bcrypt.hash(data.password, salt, (err, hash) => {
                 data.password = hash;
@@ -59,13 +63,10 @@ const findByEmail = async (req, res) => {
 };
 const findAll = async (req, res) => {
 
-    const {name,limit,page} = req.query;
-    const filter = (name) ? {name} : {};
-    const {options} = User.paginate;
-
-    options.page = (page) ? page : options.page;
-    options.limit = (limit) ? limit : options.limit;
-    
+    const { name } = req.query;
+    const filter = (name) ? { name } : {};
+    const options  = getOptions(req, User.paginate);
+ 
     try {
         const users = await User.paginate(filter,options);
         if (!users) {
@@ -159,6 +160,10 @@ const getAvatar = (req, res) => {
         }
         res.sendFile(path.resolve(filePath));
     });
+};
+
+const updateOwnerHousing = (req, res) => {
+
 };
 
 module.exports = {
