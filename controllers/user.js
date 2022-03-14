@@ -36,9 +36,9 @@ const create = (req, res) => {
 
 const findById = async (req, res) => {
     const userId = req.params.id;
-    console.log(req.app.locals.config)
+    
     try {
-        const user = await User.findById(userId);
+        const user = await User.findOne({_id: userId}).populate("housings");
         if (!user) {
             res.status(404).send(notFound('User', userId));
             return;
@@ -62,11 +62,20 @@ const findByEmail = async (req, res) => {
         res.status(500).send(e);
     }
 };
+
 const findAll = async (req, res) => {
 
     const { name } = req.query;
     const filter = (name) ? { name } : {};
     const options  = getOptions(req, User.paginate);
+    options.select = [
+        "name",
+        "surname",
+        "activated", 
+        "email", 
+        "createdAt", 
+        "lastCacheAt"
+    ];
  
     try {
         const users = await User.paginate(filter,options);
@@ -79,6 +88,7 @@ const findAll = async (req, res) => {
         res.status(500).send(internalServerError(e));
     }
 };
+
 const deleteById = async (req, res) => {
     const userId = req.params.id;
     try {
@@ -163,8 +173,30 @@ const getAvatar = (req, res) => {
     });
 };
 
-const updateOwnerHousing = (req, res) => {
-
+const updateOwnerHousing = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const owner = await User.findById(id);
+        const housing = new Housing(req.body)
+        housing.owner = owner.id;
+       
+        housing.save()
+            .then((data) => {
+                owner.housings.push(data.id);
+                User.findByIdAndUpdate(owner.id, owner, {new: true})
+                    .then(data => {
+                        res.status(201).send(data);
+                    })
+                    .catch(err => {
+                        res.status(404).send(notFound("User", owner.id));
+                    });
+            })
+            .catch(err => {
+                res.status(406).send(err);
+            });
+    } catch(e) {
+        res.status(500).send(internalServerError(e));
+    }
 };
 
 module.exports = {
@@ -175,5 +207,6 @@ module.exports = {
     deleteById,
     updateById,
     uploadAvatar,
-    getAvatar
+    getAvatar,
+    updateOwnerHousing
 };

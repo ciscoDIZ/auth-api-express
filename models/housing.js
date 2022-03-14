@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('../config/database');
-const User = require('./user');
+
 
 const Schema = mongoose.Schema;
 
@@ -15,18 +15,14 @@ const HousingSchema = new Schema(
             required: true
         },
         owner: {
-            type: mongoose.SchemaTypes.ObjectId,
-            ref: User
-        },
-        tenant: {
-            type: mongoose.SchemaTypes.ObjectId,
-            ref: User
+            type: mongoose.Types.ObjectId,
+            ref: 'User'
         }
     }
 );
 
 HousingSchema.plugin(mongoosePaginate);
 
-const Housing = new HousingSchema('Housing', HousingSchema);
+const Housing = new mongoose.model("Housing", HousingSchema);
 
 module.exports = Housing;

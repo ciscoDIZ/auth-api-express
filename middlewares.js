@@ -19,7 +19,7 @@ const auth = async (req, res, next) => {
     }
     const {API_SECRET} = req.app.locals.config;
     const payload = decode(token, API_SECRET);
-    console.log(req.params.id)
+    
     const user = await User.findById(reqId);
     const {id, email, lastCacheAt} = user;
 

@@ -17,5 +17,6 @@ api.delete('/user/:id', auth, UserController.deleteById);
 api.put('/user/:id', auth, UserController.updateById);
 api.patch('/user/:id', [auth, upload], UserController.uploadAvatar);
 api.get('/avatar/:name', UserController.getAvatar)
+api.patch('/owner/:id', UserController.updateOwnerHousing);
 
 module.exports = api;

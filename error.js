@@ -16,6 +16,11 @@ const error = {
         return {
             message: message
         };
+    },
+    forbiddenRequest: (err) => {
+        return {
+            message: err
+        }
     }
 };
 

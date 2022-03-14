@@ -33,6 +33,10 @@ const UserSchema = new Schema(
             enum: ['user', 'admin'],
             default: 'user'
         },
+        housings: {
+            type: [Schema.Types.ObjectId],
+            ref: "Housing"
+        },
         createdAt: {
             type: Date,
             required: true,

@@ -1,7 +1,7 @@
 "use strict";
 
 const User = require('../models/user');
-const {badRequest, internalServerError, notFound} = require('../error');
+const { badRequest, internalServerError, notFound, forbiddenRequest } = require('../error');
 const bcrypt = require('bcryptjs');
 const {encode, decode} = require('../services/jwt');
 
@@ -48,23 +48,28 @@ const login = async (req, res) => {
 const activate = async (req, res) => {
     const id = req.params.id;
     const {API_SECRET} = req.app.locals.config;
-    console.log(id, API_SECRET);
+    
     try {
-        const user = await User.findByIdAndUpdate(
+        const user = await User.findById(id);
+        if (user.activated) {
+            res.status(403)
+            .send(forbiddenRequest(`usuario con id ${user.id} ya dispone de cuenta activada`));
+            return;
+        }
+        user.activated = true;
+        user.lastCacheAt = Date.now();
+        const updatedUser = await User.findByIdAndUpdate(
             id,
-            {
-                activated: true,
-                lastCacheAt: Date.now()
-            },
+            user,
             {
                 new: true
             }
         );
-        if (!user) {
+        if (!updatedUser) {
             res.status(404).send(notFound("User", id));
             return;
         }
-        res.status(200).send({token: encode(user, '12h'), activatedUser: user});
+        res.status(200).send({token: encode(updatedUser, '12h'), activatedUser: user});
     } catch (e) {
         res.status(500).send(internalServerError(e));
     }
