@@ -1,6 +1,6 @@
 "use strict";
 
-const User = require('../models/user');
+const { User } = require('../models/user');
 const { badRequest, internalServerError, notFound, forbiddenRequest } = require('../error');
 const bcrypt = require('bcryptjs');
 const {encode, decode} = require('../services/jwt');
@@ -35,9 +35,12 @@ const login = async (req, res) => {
             res.status(400).send(badRequest('email o contraseña incorrectos'));
             return;
         }
-
-        const authenticatedUser = await User.findByIdAndUpdate(id, {lastCacheAt: Date.now()}, {new: true});
-
+        const authenticatedUser = await User
+            .findByIdAndUpdate(
+                id,
+                { lastCacheAt: Date.now() },
+                { new: true }
+            );
         const token = encode(authenticatedUser, '12h')
         res.status(200).send({token, authenticatedUser});
     } catch (e) {

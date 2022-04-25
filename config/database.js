@@ -12,9 +12,9 @@ const customLabels = {
 }
 
 mongoosePaginate.paginate.options = {
-    limit: 5,
+    limit: 10,
     page: 1,
     customLabels,
 }
 
-module.exports = mongoosePaginate;
+module.exports = {mongoosePaginate};

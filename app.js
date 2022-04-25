@@ -26,10 +26,18 @@ app.locals.config = app.get('config');
 
 const user_routes = require('./routes/user');
 const auth_routes = require('./routes/auth');
+const housing_routes = require('./routes/housing');
+const image_routes = require('./routes/image');
+const comment_route = require('./routes/comment');
 
+const apiBase = '/api';
 
-app.use('/api', user_routes);
-app.use('/api', auth_routes);
-app.use('/', (req, res) => res.render('home'))
+app.use(apiBase, user_routes);
+app.use(apiBase, auth_routes);
+app.use(apiBase, housing_routes);
+app.use(apiBase, image_routes);
+app.use(apiBase, comment_route);
+
+app.use('/', (req, res) => res.render('home'));
 
 module.exports = app;

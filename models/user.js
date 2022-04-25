@@ -1,7 +1,7 @@
 "use strict";
 
 const mongoose = require('mongoose');
-const mongoosePaginate = require('../config/database');
+const { mongoosePaginate } = require('../config/database');
 
 const Schema = mongoose.Schema;
 
@@ -33,10 +33,6 @@ const UserSchema = new Schema(
             enum: ['user', 'admin'],
             default: 'user'
         },
-        housings: {
-            type: [Schema.Types.ObjectId],
-            ref: "Housing"
-        },
         createdAt: {
             type: Date,
             required: true,
@@ -52,11 +48,27 @@ const UserSchema = new Schema(
             required: true,
             default: false
         }
+    },
+    {
+        toJSON: { virtuals: true }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
+        toObject: { virtuals: true } // So `console.log()` and other functions that use `toObject()` include virtuals
     }
 );
 
-UserSchema.plugin(mongoosePaginate)
+UserSchema.plugin(mongoosePaginate);
+
+UserSchema.virtual('housings',{
+    ref: 'Housing',
+    localField: '_id',
+    foreignField: 'owner'
+});
+
+UserSchema.virtual('posts', {
+    ref: 'Post',
+    localField: '_id',
+    foreignField: 'author'
+});
 
 const User = new mongoose.model('User', UserSchema);
 
-module.exports =  User;
+module.exports = { User };

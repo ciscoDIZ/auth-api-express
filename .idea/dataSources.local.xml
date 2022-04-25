@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="WS-213.6777.57">
-    <data-source name="auth@app-data.kq6vy.mongodb.net" uuid="1f0f8d61-bb27-42fb-9ccf-67d2e43809a4">
-      <database-info product="Mongo DB" version="4.4.12" jdbc-version="4.2" driver-name="MongoDB JDBC Driver" driver-version="1.13" dbms="MONGO" exact-version="4.4.12" exact-driver-version="1.13" />
+  <component name="dataSourceStorageLocal" created-in="WS-221.5080.193">
+    <data-source name="MongoDB - @app-data.kq6vy.mongodb.net" uuid="8995d619-60fe-4cfa-a394-23a345f338a7">
+      <database-info product="Mongo DB" version="5.0.7" jdbc-version="4.2" driver-name="MongoDB JDBC Driver" driver-version="1.13" dbms="MONGO" exact-version="5.0.7" exact-driver-version="1.13" />
       <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
       <secret-storage>master_key</secret-storage>
       <user-name>admin</user-name>
@@ -10,7 +10,22 @@
         <introspection-scope>
           <node kind="schema">
             <name qname="@" />
-            <name qname="appdb" />
+            <name qname="auth" />
+            <name qname="test" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+    <data-source name="auth@localhost" uuid="c6f13fe3-87a3-4569-82fb-2523f4f86997">
+      <database-info product="Mongo DB" version="" jdbc-version="4.2" driver-name="MongoDB JDBC Driver" driver-version="1.13" dbms="UNKNOWN" exact-version="0" />
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>admin</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema">
+            <name qname="@" />
+            <name qname="inmobiliaria" />
           </node>
         </introspection-scope>
       </schema-mapping>

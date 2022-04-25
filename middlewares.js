@@ -1,5 +1,5 @@
 "use strict";
-const User = require('./models/user');
+const { User } = require('./models/user');
 const {decode} = require('./services/jwt');
 
 const response = (res, status, send) => {
@@ -22,7 +22,7 @@ const auth = async (req, res, next) => {
     const payload = decode(token, API_SECRET);
     
     const user = await User.findById(reqId);
-    const { id, email, lastCacheAt, role } = user;
+    const { id, email, lastCacheAt} = user;
 
     if (!user) {
         response(res, 404, 'not found user');
@@ -32,11 +32,10 @@ const auth = async (req, res, next) => {
     if(id !== payload.id || email !== payload.email) {
         const admin = await User.findById(payload.id);
         if(admin.role !== 'admin') {
-            response(res, 403, 'no autorizado');
+            response(res, 409, 'payload conflictivo');
             return;
         }
     }
-
     next();
 };
 

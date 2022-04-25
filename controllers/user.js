@@ -5,11 +5,10 @@ const path = require('path');
 
 const bcrypt = require('bcryptjs');
 
-const User = require('../models/user');
-const Housing = require('../models/housing');
+const {User} = require('../models/user');
+const {Housing} = require('../models/housing');
 const getOptions = require('../utils/pagination');
 const { notFound, internalServerError, badRequest } = require('../error');
-
 
 const create = (req, res) => {
     const {SALT_ROUND, SALT_MINOR} = req.app.locals.config
@@ -36,9 +35,35 @@ const create = (req, res) => {
 
 const findById = async (req, res) => {
     const userId = req.params.id;
-    
+    const select = {
+        password: 0,
+        __v: 0,
+    }
     try {
-        const user = await User.findOne({_id: userId}).populate("housings");
+        const user = await User
+            .findOne(
+                {
+                    _id: userId
+                },
+                select
+            )
+            .populate(
+                {
+                    path: 'housings',
+                    select: {
+                        _id: 0,
+                        __v: 0
+                    },
+                    populate: {
+                        path: 'address',
+                        select: {
+                            _id:0,
+                            __v:0
+                        }
+                    }
+                }
+            );
+
         if (!user) {
             res.status(404).send(notFound('User', userId));
             return;
@@ -64,19 +89,32 @@ const findByEmail = async (req, res) => {
 };
 
 const findAll = async (req, res) => {
-
-    const { name } = req.query;
+    const {query} = req;
+    const { name } = query;
+    const { paginate } = User;
     const filter = (name) ? { name } : {};
-    const options  = getOptions(req, User.paginate);
-    options.select = [
-        "name",
-        "surname",
-        "activated", 
-        "email", 
-        "createdAt", 
-        "lastCacheAt"
-    ];
- 
+    const options  = getOptions({
+        query,
+        paginate,
+
+        populate: {
+            path: 'housings',
+            select: {
+                _id: 0,
+                __v: 0
+            },
+            populate: [
+                {
+                    path: 'address',
+                    select: { _id: 0, __v: 0 }
+                },
+                {
+                    path: 'images'
+                }
+            ]
+        }
+    });
+
     try {
         const users = await User.paginate(filter,options);
         if (!users) {
@@ -92,8 +130,13 @@ const findAll = async (req, res) => {
 const deleteById = async (req, res) => {
     const userId = req.params.id;
     try {
-        const user = await User.findByIdAndDelete(userId);
-        if (!user) {
+        const user = await User.findById(userId);
+        const { housings } = user;
+        if (housings) {
+            await Housing.deleteMany(housings);
+        }
+        const deletedUser = await User.findByIdAndDelete(userId);
+        if (!deletedUser) {
             res.status(404).send(notFound("User", userId));
             return;
         }
@@ -122,7 +165,6 @@ const updateById = async (req, res) => {
             const salt = bcrypt.genSaltSync(parseInt(SALT_ROUND), SALT_MINOR)
             update.password = bcrypt.hashSync(update.password, salt);
         }
-        console.log(update);
         const user = await User.findByIdAndUpdate(id, update, {new: true});
         if (!user) {
             res.status(404).send(notFound('User', id));
@@ -177,23 +219,26 @@ const updateOwnerHousing = async (req, res) => {
     const { id } = req.params;
     try {
         const owner = await User.findById(id);
-        const housing = new Housing(req.body)
-        housing.owner = owner.id;
-       
-        housing.save()
-            .then((data) => {
-                owner.housings.push(data.id);
-                User.findByIdAndUpdate(owner.id, owner, {new: true})
-                    .then(data => {
-                        res.status(201).send(data);
-                    })
-                    .catch(err => {
-                        res.status(404).send(notFound("User", owner.id));
-                    });
-            })
-            .catch(err => {
-                res.status(406).send(err);
-            });
+        const { housingId } = req.body;
+        const housing = await Housing.findById(housingId);
+        if (!housing || !owner) {
+            res.status(404).send({msg: 'not found'});
+            return;
+        }
+
+
+        const select = {
+            _id: 0,
+            __v: 0,
+            id: 0
+        }
+        housing.owner = owner._id;
+
+        await Housing.findByIdAndUpdate(housingId, housing)
+
+        await owner.populate({path: "housings", select, populate: { path: "address", select }});
+
+        res.status(201).send(owner);
     } catch(e) {
         res.status(500).send(internalServerError(e));
     }

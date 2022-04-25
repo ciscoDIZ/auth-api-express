@@ -1,7 +1,11 @@
-const getOptions = (req, paginate) => {
-    const { limit, page } = req.query;
-    const { options } = paginate;
-
+const getOptions = (opt) => {
+    const { query, paginate, populate, select } = opt;
+    const { limit, page } = query;
+    const  options  = {
+        ...paginate.options,
+        populate,
+        select
+    }
     options.page = (page) ? page : options.page;
     options.limit = (limit) ? limit : options.limit;
 
