@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50ac44bc-8f1d-4390-b62a-b0efb179991d" name="Changes" comment="demasiados cambios para acordarme de todos">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="50ac44bc-8f1d-4390-b62a-b0efb179991d" name="Changes" comment="creado find by id para controlador comment.js">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/comment.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/comment.js" afterDir="false" />
@@ -171,7 +170,7 @@
       <workItem from="1648857000282" duration="68000" />
       <workItem from="1648857410771" duration="1277000" />
       <workItem from="1650812760516" duration="28819000" />
-      <workItem from="1650887215636" duration="22492000" />
+      <workItem from="1650887215636" duration="24761000" />
     </task>
     <task id="LOCAL-00001" summary="v1.0">
       <created>1639590316827</created>
@@ -278,7 +277,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650911922762</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="creado find by id para controlador comment.js">
+      <created>1650913089868</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1650913089868</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -315,7 +321,8 @@
     <MESSAGE value="añadido README.md" />
     <MESSAGE value="eliminada paginación" />
     <MESSAGE value="demasiados cambios para acordarme de todos" />
-    <option name="LAST_COMMIT_MESSAGE" value="demasiados cambios para acordarme de todos" />
+    <MESSAGE value="creado find by id para controlador comment.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="creado find by id para controlador comment.js" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
