@@ -4,33 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50ac44bc-8f1d-4390-b62a-b0efb179991d" name="Changes" comment="eliminada paginación">
-      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/comment.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/housing.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers/image.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/address.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/comment.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/image.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/comment.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/housing.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/image.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1f0f8d61-bb27-42fb-9ccf-67d2e43809a4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1f0f8d61-bb27-42fb-9ccf-67d2e43809a4/storage_v2/_src_/schema/auth.qN0tAA.meta" beforeDir="false" />
+    <list default="true" id="50ac44bc-8f1d-4390-b62a-b0efb179991d" name="Changes" comment="demasiados cambios para acordarme de todos">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middlewares.js" beforeDir="false" afterPath="$PROJECT_DIR$/middlewares.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/housing.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/housing.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/pagination.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/pagination.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/comment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/comment.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +171,7 @@
       <workItem from="1648857000282" duration="68000" />
       <workItem from="1648857410771" duration="1277000" />
       <workItem from="1650812760516" duration="28819000" />
-      <workItem from="1650887215636" duration="21362000" />
+      <workItem from="1650887215636" duration="22492000" />
     </task>
     <task id="LOCAL-00001" summary="v1.0">
       <created>1639590316827</created>
@@ -293,7 +271,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644836395447</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="demasiados cambios para acordarme de todos">
+      <created>1650911922762</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1650911922762</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -329,7 +314,8 @@
     <MESSAGE value="problemas de conexión" />
     <MESSAGE value="añadido README.md" />
     <MESSAGE value="eliminada paginación" />
-    <option name="LAST_COMMIT_MESSAGE" value="eliminada paginación" />
+    <MESSAGE value="demasiados cambios para acordarme de todos" />
+    <option name="LAST_COMMIT_MESSAGE" value="demasiados cambios para acordarme de todos" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

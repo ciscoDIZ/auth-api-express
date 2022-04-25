@@ -29,9 +29,26 @@ const findAll = async (req, res) => {
     }catch (e) {
         res.status(500).send(internalServerError(e));
     }
+};
+
+const findById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const comment = await Comment.findOne({ id });
+        if (!comment) {
+            res.status(404).send(notFound('Comment', id));
+            return;
+        }
+
+        res.status(200).send(comment)
+    }catch (e) {
+        res.status(500).send(internalServerError(e))
+    }
+
 }
 
 module.exports = {
     create,
-    findAll
+    findAll,
+    findById
 };
