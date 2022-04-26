@@ -62,9 +62,26 @@ const deleteById = async (req, res) => {
     }
 }
 
+const update = async (req, res) => {
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const updatedData = {title, content};
+    try{
+        const updatedComment = await Comment.findByIdAndUpdate(id, updatedData, {new: true});
+        if (!updatedComment) {
+            res.status(404).send(notFound('Comment', id));
+            return;
+        }
+        res.status(201).send(updatedComment);
+    }catch (e) {
+        res.status(500).send(internalServerError(e));
+    }
+}
+
 module.exports = {
     create,
     findAll,
     findById,
-    deleteById
+    deleteById,
+    update
 };
