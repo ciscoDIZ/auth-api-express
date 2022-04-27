@@ -4,10 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50ac44bc-8f1d-4390-b62a-b0efb179991d" name="Changes" comment="creado find by id para controlador comment.js">
+    <list default="true" id="50ac44bc-8f1d-4390-b62a-b0efb179991d" name="Changes" comment="creado update para controlador comment.js">
+      <change afterPath="$PROJECT_DIR$/swagger.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/comment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middlewares.js" beforeDir="false" afterPath="$PROJECT_DIR$/middlewares.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/comment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/housing.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/housing.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/image.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/image.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/jwt.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/jwt.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +69,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -171,7 +181,10 @@
       <workItem from="1648857410771" duration="1277000" />
       <workItem from="1650812760516" duration="28819000" />
       <workItem from="1650887215636" duration="24761000" />
-      <workItem from="1650968392449" duration="2018000" />
+      <workItem from="1650968392449" duration="4289000" />
+      <workItem from="1650973256250" duration="3484000" />
+      <workItem from="1650991974739" duration="16063000" />
+      <workItem from="1651042098214" duration="684000" />
     </task>
     <task id="LOCAL-00001" summary="v1.0">
       <created>1639590316827</created>
@@ -285,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650913089868</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="creado update para controlador comment.js">
+      <created>1650970519208</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1650970519208</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -323,7 +343,8 @@
     <MESSAGE value="eliminada paginación" />
     <MESSAGE value="demasiados cambios para acordarme de todos" />
     <MESSAGE value="creado find by id para controlador comment.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="creado find by id para controlador comment.js" />
+    <MESSAGE value="creado update para controlador comment.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="creado update para controlador comment.js" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

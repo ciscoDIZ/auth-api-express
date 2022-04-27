@@ -7,6 +7,9 @@ const path = require('path');
 const cors = require('cors');
 const app = express();
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json')
+
 const SETTINGS = dotenv.config();
 
 app.disable('x-powered-by');
@@ -39,5 +42,5 @@ app.use(apiBase, image_routes);
 app.use(apiBase, comment_route);
 
 app.use('/', (req, res) => res.render('home'));
-
+// app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 module.exports = app;
