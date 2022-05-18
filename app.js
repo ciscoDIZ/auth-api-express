@@ -3,12 +3,13 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
-//const morgan = require('morgan');
+const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
-
+const bodyParser = require('body-parser');
+const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json')
+
 
 const SETTINGS = dotenv.config();
 
@@ -21,9 +22,39 @@ app.set('view engine', 'pug');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-//app.use(morgan('combined'));
-app.use(cors());
+app.use(morgan('combined'));
+app.use(cors({origin: "*"}));
+const swaggerDefinition = {
+    openapi: '3.0.0',
+    info: {
+        title: 'Express API for JSONPlaceholder',
+        version: '1.0.0',
+        description:
+            'This is a REST API application made with Express. It retrieves data from JSONPlaceholder.',
+        license: {
+            name: 'Licensed Under MIT',
+            url: 'https://spdx.org/licenses/MIT.html',
+        },
+        contact: {
+            name: 'JSONPlaceholder',
+            url: 'https://jsonplaceholder.typicode.com',
+        },
+    },
+    servers: [
+        {
+            url: 'http://localhost:5000',
+            description: 'Development server',
+        },
+    ],
+};
 
+const options = {
+    swaggerDefinition,
+    // Paths to files containing OpenAPI definitions
+    apis: ['./routes/*.js'],
+};
+const specs = swaggerJsdoc(options)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 app.locals.env = app.get('env');
 app.locals.config = app.get('config');
 

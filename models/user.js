@@ -24,6 +24,10 @@ const UserSchema = new Schema(
             type: String,
             required: true
         },
+        residence: {
+          type: String,
+          default: 'unknown'
+        },
         avatar: {
           type: String,
           required: false

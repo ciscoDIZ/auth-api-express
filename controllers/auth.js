@@ -3,7 +3,7 @@
 const { User } = require('../models/user');
 const { badRequest, internalServerError, notFound, forbiddenRequest } = require('../error');
 const bcrypt = require('bcryptjs');
-const {encode} = require('../services/jwt');
+const { encode } = require('../services/jwt');
 
 const login = async (req, res) => {
 
@@ -48,7 +48,7 @@ const login = async (req, res) => {
                 { new: true }
             );
         const token = encode(authenticatedUser, '12h')
-        res.status(200).send({ token, authenticatedUser });
+        res.status(200).send({  token });
     } catch (e) {
         res.status(500).send(internalServerError(e));
     }
@@ -83,7 +83,27 @@ const activate = async (req, res) => {
     }
 }
 
+const verifyPassword = async (req, res) => {
+  const { id, password } = req.body;
+  try {
+      const user = await User.findById(id);
+      if (!user) {
+          res.status(404).send(notFound('User', id));
+          return;
+      }
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
+          res.status(401).send({ msg: 'no coincide contraseña' });
+          return;
+      }
+      res.status(200).send({msg: 'Ok!'})
+  } catch (e) {
+
+  }
+}
+
 module.exports = {
     login,
-    activate
+    activate,
+    verifyPassword
 };

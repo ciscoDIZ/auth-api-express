@@ -5,7 +5,7 @@ const {unlink} = require('fs/promises');
 const path = require('path');
 
 const { Image } = require('../models/image');
-
+const { persist } = require('../services/image');
 const getOptions = require('../utils/pagination');
 const {badRequest, internalServerError, notFound} = require('../error');
 
@@ -40,13 +40,13 @@ const create = async (req, res) => {
         housing,
         apiUri
     }
-    const image = new Image(imageData);
     try {
-        await image.save();
+        const image = await persist(imageData);
+        res.status(200).send(image);
     }catch (e) {
         res.status(500).send(internalServerError(e));
     }
-    res.status(200).send(image);
+
 };
 
 const findByName = async (req, res) => {
@@ -98,7 +98,7 @@ const deleteById = async (req, res) => {
     const { id } = req.params;
     try {
         const image = await Image.findByIdAndDelete(id);
-        const [, , , , , fileName] = image.apiUri.split('/');
+        const [ , , , , , fileName ] = image.apiUri.split('/');
         const absoluteFilePath = path.resolve(`./uploads/${fileName}`);
         await unlink(absoluteFilePath);
         if (!image) {
@@ -113,11 +113,15 @@ const deleteById = async (req, res) => {
 };
 
 const findAll = async (req, res) => {
-    const {title} = req.query;
-    const filter = (title) ? {title} : {};
+    const {housing, page, limit} = req.query;
+    const filter = (housing) ? {housing} : {};
     const { paginate } = Image;
-    const query = {filter};
-    const options = getOptions({query, paginate})
+    const query = {
+        page,
+        limit
+    }
+    const options = getOptions({query, paginate});
+    console.log(req.query)
     try {
         const images = await Image.paginate(filter,options);
         if (!images) {

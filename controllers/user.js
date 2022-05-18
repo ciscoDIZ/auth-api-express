@@ -1,16 +1,17 @@
 "use strict";
 
 const fs = require('fs');
-const path = require('path'); 
+const path = require('path');
 
 const bcrypt = require('bcryptjs');
 
 const {User} = require('../models/user');
 const {Housing} = require('../models/housing');
 const getOptions = require('../utils/pagination');
-const { notFound, internalServerError, badRequest } = require('../error');
+const {notFound, internalServerError, badRequest} = require('../error');
 
 const create = (req, res) => {
+    const {protocol, headers} = req;
     const {SALT_ROUND, SALT_MINOR} = req.app.locals.config
     try {
         bcrypt.genSalt(parseInt(SALT_ROUND), SALT_MINOR, (err, salt) => {
@@ -21,7 +22,21 @@ const create = (req, res) => {
                 const user = new User(data);
                 user.save()
                     .then((data) => {
-                        res.status(201).send(data);
+                        const activationUri = `${protocol}://${headers.host}/api/auth/${data.id}`;
+                        const {name, surname, email, role, activated, createdAt, lastCacheAt, id, residence} = data;
+                        const user = {
+                            id,
+                            name,
+                            surname,
+                            email,
+                            role,
+                            activated,
+                            activationUri,
+                            createdAt,
+                            lastCacheAt,
+                            residence
+                        }
+                        res.status(201).send(user);
                     })
                     .catch(err => {
                         res.status(406).send(err);
@@ -54,13 +69,20 @@ const findById = async (req, res) => {
                         _id: 0,
                         __v: 0
                     },
-                    populate: {
-                        path: 'address',
-                        select: {
-                            _id:0,
-                            __v:0
-                        }
-                    }
+                    populate:
+                        [
+                            {
+                                path: 'address',
+                                select: {
+                                    _id: 0,
+                                    __v: 0
+                                }
+                            },
+                            {
+                                path: 'mainImage'
+                            }
+                        ]
+
                 }
             );
 
@@ -90,33 +112,35 @@ const findByEmail = async (req, res) => {
 
 const findAll = async (req, res) => {
     const {query} = req;
-    const { name } = query;
-    const { paginate } = User;
-    const filter = (name) ? { name } : {};
-    const options  = getOptions({
+    const {name} = query;
+    const {paginate} = User;
+    const filter = (name) ? {name} : {};
+    const options = getOptions({
         query,
         paginate,
 
         populate: {
             path: 'housings',
             select: {
-                _id: 0,
                 __v: 0
             },
             populate: [
                 {
                     path: 'address',
-                    select: { _id: 0, __v: 0 }
+                    select: {_id: 0, __v: 0}
                 },
                 {
-                    path: 'images'
+                    path: 'images',
+                    options: {
+                        limit: 5
+                    }
                 }
             ]
         }
     });
 
     try {
-        const users = await User.paginate(filter,options);
+        const users = await User.paginate(filter, options);
         if (!users) {
             res.status(404).send(notFound('Users'));
             return;
@@ -131,7 +155,7 @@ const deleteById = async (req, res) => {
     const userId = req.params.id;
     try {
         const user = await User.findById(userId);
-        const { housings } = user;
+        const {housings} = user;
         if (housings) {
             await Housing.deleteMany(housings);
         }
@@ -150,11 +174,13 @@ const updateById = async (req, res) => {
     const id = req.params.id;
     const {SALT_ROUND, SALT_MINOR} = req.app.locals.config;
     try {
-        const {name, surname, password, role} = req.body;
+        const {name, surname, password, email, role, residence} = req.body;
         const update = {
             name,
             surname,
             password,
+            email,
+            residence,
             role,
         }
         if (Object.entries(update) < 1) {
@@ -162,6 +188,7 @@ const updateById = async (req, res) => {
             return;
         }
         if (update.password) {
+            console.log(update.password)
             const salt = bcrypt.genSaltSync(parseInt(SALT_ROUND), SALT_MINOR)
             update.password = bcrypt.hashSync(update.password, salt);
         }
@@ -177,8 +204,8 @@ const updateById = async (req, res) => {
 };
 
 const uploadAvatar = async (req, res) => {
-    const { id } = req.params;
-    const { protocol, headers } = req;
+    const {id} = req.params;
+    const {protocol, headers} = req;
     try {
         const user = await User.findById(id);
         if (!user) {
@@ -188,19 +215,19 @@ const uploadAvatar = async (req, res) => {
         if (req.files) {
             const [, fileName] = req.files.file.path.split('/');
             const [, ext] = fileName.split('.');
-            if (ext !== 'png' && ext !== 'jpg') {
+            if (ext !== 'png' && ext !== 'jpg' && ext !== 'jpeg') {
                 res.status(400).send(badRequest('la extensión debe ser .png o .jpg'));
                 return;
             }
 
             user.avatar = `${protocol}://${headers.host}/api/avatar/${fileName}`;
 
-            const updatedUser = await User.findByIdAndUpdate(id, user, {new: true}); 
+            const updatedUser = await User.findByIdAndUpdate(id, user, {new: true});
             res.status(201).send(updatedUser);
         }
     } catch (e) {
         res.status(500).send(internalServerError(e));
-    } 
+    }
 };
 
 const getAvatar = (req, res) => {
@@ -216,10 +243,10 @@ const getAvatar = (req, res) => {
 };
 
 const updateOwnerHousing = async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
     try {
         const owner = await User.findById(id);
-        const { housingId } = req.body;
+        const {housingId} = req.body;
         const housing = await Housing.findById(housingId);
         if (!housing || !owner) {
             res.status(404).send({msg: 'not found'});
@@ -236,10 +263,10 @@ const updateOwnerHousing = async (req, res) => {
 
         await Housing.findByIdAndUpdate(housingId, housing)
 
-        await owner.populate({path: "housings", select, populate: { path: "address", select }});
+        await owner.populate({path: "housings", select, populate: {path: "address", select}});
 
         res.status(201).send(owner);
-    } catch(e) {
+    } catch (e) {
         res.status(500).send(internalServerError(e));
     }
 };
