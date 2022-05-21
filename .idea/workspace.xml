@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50ac44bc-8f1d-4390-b62a-b0efb179991d" name="Changes" comment="swagger">
-      <change afterPath="$PROJECT_DIR$/api.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/housing.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/housing.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/image.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/image.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/comment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/image.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/image.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/home.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/home.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-    </list>
+    <list default="true" id="50ac44bc-8f1d-4390-b62a-b0efb179991d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,9 +13,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="JavaScript File" />
-        <option value="Swagger File (YAML)" />
       </list>
     </option>
   </component>
@@ -53,106 +36,30 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectId" id="22CtV6tjnMCmuAyrnzNB4kcHjUL" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.14.2&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.11.27&quot;,
-    &quot;js.last.introduce.type&quot;: &quot;CONST&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "yarn",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/test" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager">
     <configuration name="auth-api" type="NodeJSConfigurationType" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
-    <configuration default="true" type="SwaggerCodegen">
-      <option name="activeConfigurationType" value="FILE" />
-      <option name="configurationPath" value="" />
-      <option name="customJreEnabled" value="false" />
-      <option name="customTemplatesPath" value="" />
-      <option name="enableDebugLogging" value="false" />
-      <option name="generateToPath" value="$PROJECT_DIR$/gen" />
-      <option name="generationParameters">
-        <list />
-      </option>
-      <option name="generatorPath" value="https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.0.0/openapi-generator-cli-5.0.0.jar" />
-      <option name="jdkPath" value="Default" />
-      <option name="language" value="java" />
-      <option name="specificationPath" value="$PROJECT_DIR$/api.yaml" />
-      <method v="2" />
-    </configuration>
-    <configuration name="api.yaml" type="SwaggerCodegen">
-      <option name="activeConfigurationType" value="FILE" />
-      <option name="configurationPath" value="" />
-      <option name="customJreEnabled" value="false" />
-      <option name="customTemplatesPath" value="" />
-      <option name="enableDebugLogging" value="false" />
-      <option name="generateToPath" value="$PROJECT_DIR$/gen" />
-      <option name="generationParameters">
-        <list />
-      </option>
-      <option name="generatorPath" value="https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.0.0/openapi-generator-cli-5.0.0.jar" />
-      <option name="jdkPath" value="Default" />
-      <option name="language" value="java" />
-      <option name="specificationPath" value="$PROJECT_DIR$/api.yaml" />
-      <method v="2" />
-    </configuration>
-    <configuration name="docker-compose.yml.api: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="api" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="dev" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="npm.dev" />
-        <item itemvalue="Docker.docker-compose.yml.api: Compose Deployment" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -190,58 +97,7 @@
       <workItem from="1644878198137" duration="46000" />
       <workItem from="1644893309636" duration="16000" />
       <workItem from="1645812492282" duration="313000" />
-      <workItem from="1647433690939" duration="418000" />
-      <workItem from="1647479371988" duration="209000" />
-      <workItem from="1647479589515" duration="2592000" />
-      <workItem from="1647482302444" duration="1275000" />
-      <workItem from="1647547585340" duration="57000" />
-      <workItem from="1647547652333" duration="1047000" />
-      <workItem from="1647647436279" duration="1440000" />
-      <workItem from="1647648888483" duration="7250000" />
-      <workItem from="1647700211752" duration="2535000" />
-      <workItem from="1647773839516" duration="1436000" />
-      <workItem from="1647872368246" duration="4669000" />
-      <workItem from="1647891901515" duration="4789000" />
-      <workItem from="1647905137179" duration="7840000" />
-      <workItem from="1647974591124" duration="4672000" />
-      <workItem from="1647979329688" duration="6000" />
-      <workItem from="1648005904339" duration="8430000" />
-      <workItem from="1648044385924" duration="9102000" />
-      <workItem from="1648120531190" duration="11918000" />
-      <workItem from="1648201480257" duration="4052000" />
-      <workItem from="1648221478309" duration="1398000" />
-      <workItem from="1648224914512" duration="913000" />
-      <workItem from="1648393252114" duration="2583000" />
-      <workItem from="1648423548448" duration="3112000" />
-      <workItem from="1648470432825" duration="961000" />
-      <workItem from="1648572189688" duration="600000" />
-      <workItem from="1648803435744" duration="711000" />
-      <workItem from="1648855568679" duration="358000" />
-      <workItem from="1648857000282" duration="68000" />
-      <workItem from="1648857410771" duration="1277000" />
-      <workItem from="1650812760516" duration="28819000" />
-      <workItem from="1650887215636" duration="24761000" />
-      <workItem from="1650968392449" duration="4289000" />
-      <workItem from="1650973256250" duration="3484000" />
-      <workItem from="1650991974739" duration="16063000" />
-      <workItem from="1651042098214" duration="15670000" />
-      <workItem from="1651089768065" duration="1095000" />
-      <workItem from="1651151992104" duration="1587000" />
-      <workItem from="1651936822236" duration="193000" />
-      <workItem from="1652220633884" duration="16290000" />
-      <workItem from="1652407618196" duration="703000" />
-      <workItem from="1652455028829" duration="8826000" />
-      <workItem from="1652484239300" duration="7330000" />
-      <workItem from="1652561375373" duration="10872000" />
-      <workItem from="1652627935703" duration="10286000" />
-      <workItem from="1652706430067" duration="47764000" />
-      <workItem from="1652815208706" duration="1138000" />
-      <workItem from="1652819072833" duration="18188000" />
-      <workItem from="1652848282918" duration="12298000" />
-      <workItem from="1652897839939" duration="3245000" />
-      <workItem from="1652959818141" duration="16347000" />
-      <workItem from="1653055626061" duration="3211000" />
-      <workItem from="1653146269768" duration="4620000" />
+      <workItem from="1653161622998" duration="699000" />
     </task>
     <task id="LOCAL-00001" summary="v1.0">
       <created>1639590316827</created>
@@ -341,42 +197,7 @@
       <option name="project" value="LOCAL" />
       <updated>1644836395447</updated>
     </task>
-    <task id="LOCAL-00015" summary="demasiados cambios para acordarme de todos">
-      <created>1650911922762</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1650911922762</updated>
-    </task>
-    <task id="LOCAL-00016" summary="creado find by id para controlador comment.js">
-      <created>1650913089868</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1650913089868</updated>
-    </task>
-    <task id="LOCAL-00017" summary="creado update para controlador comment.js">
-      <created>1650970519208</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1650970519208</updated>
-    </task>
-    <task id="LOCAL-00018" summary="implementando área privada">
-      <created>1651042893316</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1651042893316</updated>
-    </task>
-    <task id="LOCAL-00019" summary="swagger">
-      <created>1652844511982</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1652844511982</updated>
-    </task>
-    <option name="localTasksCounter" value="20" />
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,7 +214,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="dev" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -412,12 +233,7 @@
     <MESSAGE value="problemas de conexión" />
     <MESSAGE value="añadido README.md" />
     <MESSAGE value="eliminada paginación" />
-    <MESSAGE value="demasiados cambios para acordarme de todos" />
-    <MESSAGE value="creado find by id para controlador comment.js" />
-    <MESSAGE value="creado update para controlador comment.js" />
-    <MESSAGE value="implementando área privada" />
-    <MESSAGE value="swagger" />
-    <option name="LAST_COMMIT_MESSAGE" value="swagger" />
+    <option name="LAST_COMMIT_MESSAGE" value="eliminada paginación" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
