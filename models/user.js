@@ -51,6 +51,11 @@ const UserSchema = new Schema(
             type: Boolean,
             required: true,
             default: false
+        },
+        biography: {
+            type: String,
+            required: false,
+            default: ''
         }
     },
     {

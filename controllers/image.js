@@ -10,6 +10,17 @@ const getOptions = require('../utils/pagination');
 const {badRequest, internalServerError, notFound} = require('../error');
 
 
+async function getFileName(file, res) {
+    const [, fileName] = file.path.split('/');
+    const [, extension] = fileName.split('.');
+    if (extension !== 'jpg' && extension !== 'png') {
+        await unlink(file.path);
+        res.status(400).send(badRequest('la extensión debe ser .png o .jpg'));
+        return undefined;
+    }
+    return fileName;
+}
+
 const create = async (req, res) => {
     const { file } = req.files;
     const { title, housing } = req.body;
@@ -27,13 +38,7 @@ const create = async (req, res) => {
         res.status(400).send(badRequest('obligatorio relacionar con vivienda'));
         return;
     }
-    const [ , fileName ] = file.path.split('/');
-    const [ , extension ] = fileName.split('.');
-    if (extension !== 'jpg' && extension !== 'png') {
-        await unlink(file.path);
-        res.status(400).send(badRequest('la extensión debe ser .png o .jpg'));
-        return;
-    }
+    const fileName = await getFileName(file, res);
     const apiUri = `${protocol}://${headers.host}/api/image/${fileName}`;
     const imageData = {
         title,
@@ -63,9 +68,21 @@ const findByName = async (req, res) => {
 
 const update = async (req, res) => {
   const { id } = req.params;
-  const { body } = req;
+  const { title } = req.body;
+  const { file } = req.files;
+  const { protocol, headers } = req;
   try {
-      const updatedImage = await Image.findByIdAndUpdate(id, body, {new: true});
+      if (!file) {
+          res.status(400).send(badRequest('se debe subir fichero'));
+          return;
+      }
+      const fileName = getFileName(file, res);
+      const apiUri = `${protocol}://${headers.host}/api/image/${fileName}`;
+      const imageData = {
+          title,
+          apiUri
+      }
+      const updatedImage = await Image.findByIdAndUpdate(id, imageData, {new: true});
       if (!updatedImage) {
           res.status(404).send(notFound("Image", id));
           return;

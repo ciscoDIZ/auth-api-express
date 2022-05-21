@@ -112,9 +112,14 @@ const findByEmail = async (req, res) => {
 
 const findAll = async (req, res) => {
     const {query} = req;
-    const {name} = query;
+    const {name, pagination} = query;
     const {paginate} = User;
     const filter = (name) ? {name} : {};
+    if (!pagination) {
+        const users = await User.find().populate('housings')
+        res.status(200).send(users);
+        return;
+    }
     const options = getOptions({
         query,
         paginate,
@@ -174,13 +179,14 @@ const updateById = async (req, res) => {
     const id = req.params.id;
     const {SALT_ROUND, SALT_MINOR} = req.app.locals.config;
     try {
-        const {name, surname, password, email, role, residence} = req.body;
+        const {name, surname, password, email, role, residence, biography} = req.body;
         const update = {
             name,
             surname,
             password,
             email,
             residence,
+            biography,
             role,
         }
         if (Object.entries(update) < 1) {
@@ -229,7 +235,7 @@ const uploadAvatar = async (req, res) => {
         res.status(500).send(internalServerError(e));
     }
 };
-
+const s = ''
 const getAvatar = (req, res) => {
     const {name} = req.params;
     const filePath = `./uploads/${name}`;
@@ -242,34 +248,6 @@ const getAvatar = (req, res) => {
     });
 };
 
-const updateOwnerHousing = async (req, res) => {
-    const {id} = req.params;
-    try {
-        const owner = await User.findById(id);
-        const {housingId} = req.body;
-        const housing = await Housing.findById(housingId);
-        if (!housing || !owner) {
-            res.status(404).send({msg: 'not found'});
-            return;
-        }
-
-
-        const select = {
-            _id: 0,
-            __v: 0,
-            id: 0
-        }
-        housing.owner = owner._id;
-
-        await Housing.findByIdAndUpdate(housingId, housing)
-
-        await owner.populate({path: "housings", select, populate: {path: "address", select}});
-
-        res.status(201).send(owner);
-    } catch (e) {
-        res.status(500).send(internalServerError(e));
-    }
-};
 
 module.exports = {
     create,
@@ -280,5 +258,4 @@ module.exports = {
     updateById,
     uploadAvatar,
     getAvatar,
-    updateOwnerHousing
 };

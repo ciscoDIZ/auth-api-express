@@ -1,0 +1,694 @@
+swagger: "2.0"
+
+info:
+  title: Viviendas reales
+  description: descripción de la API.
+  version: 1.0.0
+host: localhost:5000
+
+basePath: /api
+
+schemes:
+  - http
+  - https
+paths:
+  /user:
+    post:
+      tags:
+        - user
+      description: crea un nuevo usuario
+      parameters:
+        - name: user
+          description: datos que representan al nuevo usuario
+          in: body
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              surname:
+                type: string
+              email:
+                type: string
+              residence:
+                type: string
+              password:
+                type: string
+              avatar:
+                type: string
+              role:
+                type: string
+                enum: [ user, admin ]
+            required:
+              - name
+              - surname
+              - email
+              - password
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad request
+    get:
+      tags:
+        - user
+      description: devuelve un único usuario
+      parameters:
+        - name: page
+          description: página a la que accede la petición
+          in: query
+          required: false
+          type: string
+        - name: limit
+          description: cantidad de recursos máximos devueltos
+          in: query
+          required: false
+          type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad request
+  /user/{id}:
+    get:
+      tags:
+        - user
+      description: Get all Employee
+      parameters:
+        - name: id
+          description: Create an new employee
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad request
+    put:
+      security:
+        - BearerAuth: [token]
+      tags:
+        - user
+      description: Actualiza un usuario cuya id coincide con la pasada po parámetro
+      parameters:
+        - name: id
+          description: ObjectID del usuario a borrar
+          in: path
+          required: true
+          type: string
+        - name: user
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              surname:
+                type: string
+              password:
+                type: string
+              email:
+                type: string
+              residence:
+                type: string
+              role:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad request
+    patch:
+      tags:
+        - user
+      description: actualiza el avatar del usuario cuya id coincide con la pasada po parámetro
+      parameters:
+        - name: id
+          description: ObjectID del usuario a borrar
+          in: path
+          required: true
+          type: string
+        - name: token
+          description: token que autentica al usuario que realiza la petición
+          in: header
+          required: true
+          type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad request
+  /email/{email}:
+    get:
+      tags:
+        - user
+      description: busca un usuario cuyo email coincide con el pasado por parámetro
+      parameters:
+        - name: email
+          description: email del usuario que buscar
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad request
+  /user{id}:
+    delete:
+      tags:
+        - user
+      description: Borra un usuario cuya id coincide con la pasada po parámetro
+      parameters:
+        - name: id
+          description: ObjectID del usuario a borrar
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad request
+  /comment:
+    post:
+      tags:
+        - comment
+      description: crea nuevo comentario
+      parameters:
+        - name: comment
+          description: objeto el cual contiene los datos del nuevo usuario
+          in: body
+          schema:
+            type: object
+            properties:
+              author:
+                type: string
+              content:
+                type: string
+              title:
+                type: string
+              housing:
+                type: string
+            required:
+              - author
+              - content
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad request
+    get:
+      tags:
+        - comment
+      description: recupera los usuarios
+      responses:
+        200:
+          description: success
+        404:
+          description: si no se encuentra
+        400:
+          description: error en algún parámetro
+      parameters:
+        - name: page
+          description: página a la que accede la petición
+          in: query
+          required: false
+          type: string
+        - name: limit
+          in: query
+          required: false
+          type: string
+  /comment/{id}:
+    get:
+      tags:
+        - comment
+      description: recupera los datos de un comentario el cual coincide con l id que se pasa por parámetro
+      responses:
+        200:
+          description: success
+      parameters:
+        - name: id
+          description: id del comentario al cual se pretende acceder
+          type: string
+          in: path
+          required: true
+    delete:
+      tags:
+        - comment
+      parameters:
+        - name: id
+          type: string
+          description: id del recurse el cual se pretende borrar
+          in: path
+          required: true
+      responses:
+        203:
+          description: cuando se ha borrado
+        404:
+          description: si no existe el recurso
+    patch:
+      tags:
+        - comment
+      description: actualiza el recurso correspondiente a la id pasada por parámetro
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+      responses:
+        201:
+          description: si se actualiza
+        400:
+          description: en caso de error
+        404:
+          description: si no existe el recurso
+  /comment/like/{id}:
+    patch:
+      tags:
+        - comment
+      description: crea nuevo comentario
+      responses:
+        201:
+          description: si se actualiza el recurso
+        400:
+          description: si hay algún error en la consulta
+        404:
+          description: si el recurso al que se pretende acceder no existe
+      parameters:
+        - name: comment
+          description: objeto el cual contiene los datos del nuevo usuario
+          in: body
+          schema:
+            type: object
+            properties:
+              author:
+                type: string
+              content:
+                type: string
+              title:
+                type: string
+              housing:
+                type: string
+            required:
+              - author
+              - content
+        - name: id
+          in: path
+          required: true
+          type: string
+  /comment/like/remove/{id}:
+    patch:
+      tags:
+        - comment
+      description: crea nuevo comentario
+      responses:
+        201:
+          description: si se actualiza el recurso
+        400:
+          description: si hay algún error en la consulta
+        404:
+          description: si el recurso al que se pretende acceder no existe
+      parameters:
+        - name: comment
+          description: objeto el cual contiene los datos del nuevo usuario
+          in: body
+          schema:
+            type: object
+            properties:
+              author:
+                type: string
+              content:
+                type: string
+              title:
+                type: string
+              housing:
+                type: string
+            required:
+              - author
+              - content
+        - name: id
+          in: path
+          type: string
+          required: true
+  /auth:
+    patch:
+      tags:
+        - auth
+      description: autentica usuario ya registrado
+      responses:
+        200:
+          description: si el usuario es autenticado
+        400:
+          description: en caso de no ser autenticado
+      parameters:
+        - name: payload
+          description: objeto el cual contiene los credenciales del usuario a autenticar
+          in: body
+          schema:
+            type: object
+            properties:
+              payload:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  password:
+                    type: string
+    put:
+      responses:
+        200:
+          description: a
+        400:
+          description: a
+      tags:
+        - auth
+      description: autentica usuario ya registrado
+      parameters:
+        - name: credentials
+          description: objeto el cual contiene los credenciales del usuario a autenticar
+          in: body
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              password:
+                type: string
+  /auth/{id}:
+    patch:
+      responses:
+        200:
+          description: a
+        400:
+          description: a
+      tags:
+        - auth
+      description: activa cuenta de usuario ya registrado
+      parameters:
+        - name: id
+          in: path
+          description: id del usuario el cual se pretende activar
+          type: string
+          required: true
+  /housing:
+    post:
+      responses:
+        201:
+          description: recurso creado
+        400:
+          description: faltan atributos requeridos
+      tags:
+        - housing
+      description: crea una nueva vivienda
+      parameters:
+        - name: housing
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              address:
+                type: object
+                properties:
+                  state:
+                    type: string
+                  province:
+                    type: string
+                  road:
+                    type: string
+                    enum:
+                      - street
+                      - avenue
+                      - road
+                      - square
+                  name:
+                    type: string
+                  number:
+                    type: string
+                  floor:
+                    type: string
+                  ladder:
+                    type: string
+              description:
+                type: string
+              price:
+                type: number
+              surface:
+                type: number
+              owner:
+                type: string
+    get:
+      responses:
+        200:
+          description: success
+        404:
+          description: no existe el documento en base de datos
+      tags:
+        - housing
+      description: obtiene el un conjunto de recursos paginados
+      parameters:
+        - name: limit
+          in: query
+          description: limite de los recursos obtenidos
+          type: number
+        - name: page
+          in: query
+          type: number
+          description: página actual
+    put:
+      responses:
+        201:
+          description: recurso actualizado correctamente
+        404:
+          description: recurso no encontrado
+      tags:
+        - housing
+      description: actualiza la vivienda de manera absoluta
+      parameters:
+        - name: housing
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              address:
+                type: object
+                properties:
+                  state:
+                    type: string
+                  province:
+                    type: string
+                  road:
+                    type: string
+                    enum:
+                      - street
+                      - avenue
+                      - road
+                      - square
+                  name:
+                    type: string
+                  number:
+                    type: string
+                  floor:
+                    type: string
+                  ladder:
+                    type: string
+              description:
+                type: string
+              price:
+                type: number
+              surface:
+                type: number
+              owner:
+                type: string
+  /housing/{id}:
+    get:
+      responses:
+        200:
+          description: recurso recuperado correctamente
+        404:
+          description: recurso no encontrado
+      tags:
+        - housing
+      description: recupera el recurso housing coincidente con la id pasada por parámetro
+      parameters:
+        - name: id
+          type: string
+          required: true
+          in: path
+          description: id del recurso a recuperar
+    delete:
+      responses:
+        203:
+          description: recurso borrado correctamente
+        404:
+          description: recurso a borrar no existe o no se encuentra
+      tags:
+        - housing
+      description: borra el recurso con id coincidente con la pasada por parámetro
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+          description: id del recurso a recuperar
+    patch:
+      responses:
+        201:
+          description: recurso actualizado correctamente
+        404:
+          description: no existe o no se encuentra recurso
+      tags:
+        - housing
+      description: actualización parcial del recurso housing con id coincidente con la pasada por parámetro
+      parameters:
+        - name: file
+          required: true
+          in: formData
+          type: file
+  /housing/owner/:owner:
+    get:
+      responses:
+        200:
+          description: recurso recuperado con éxito
+        404:
+          description: recurso no encontrado o no existe
+      tags:
+        - housing
+      description: recupera todos los recursos housing cuyo atributo owner coincide con el pasado por parámetro
+      parameters:
+        - name: owner
+          type: string
+          required: true
+          in: path
+  /housing/like/:id:
+    patch:
+      tags:
+        - housing
+      responses:
+        201:
+          description: recurso actualizado con éxito
+        404:
+          description: recurso no existe o no se encuentra
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+  /housing/like/remove/:id:
+    patch:
+      tags:
+        - housing
+      responses:
+        201:
+          description: recurso actualizado con éxito
+        404:
+          description: recurso no existe o no se encuentra
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+  /image:
+    post:
+      tags:
+        - image
+      responses:
+        201:
+          description: recurso creado correctamente
+        400:
+          description: falta algún campo requerido
+      parameters:
+        - name: image
+          required: true
+          in: body
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              housing:
+                type: string
+        - name: file
+          required: true
+          in: formData
+          type: file
+    get:
+      tags:
+        - housing
+      responses:
+        200:
+          description: recursos recuperados con éxito
+        404:
+          description: no existe la colección de datos
+      parameters:
+        - name: housing
+          type: string
+          in: path
+          required: true
+        - name: limit
+          type: string
+          in: query
+          required: false
+          description: límite de recursos recuperados en una petición
+        - name: page
+          type: string
+          in: query
+          required: false
+          description: página actual
+      description: recupera un conjunto de recursos de tipo image de manera paginada
+  /image/:id:
+    patch:
+      tags:
+        - image
+      responses:
+        201:
+          description: recurso actualizado con éxito
+        404:
+          description: recurso no encontrado
+      description: actualiza de manera parcial el recurso de tipo image que coincide con el parámetro id pasado por la 
+                   query de la petición
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+          description: id del recurso el cuál de pretende actualizar
+        - name: file
+          in: formData
+          type: file
+          required: true
+          description: fichero nuevo
+        - name: title
+          in: formData
+          type: string
+          description: nuevo título
+    delete:
+      tags:
+        - image
+      responses:
+        203:
+          description: recurso borrado con éxito
+        404:
+          description: recurso no encontrado o no existe
+  /image/id/:id:
+    get:
+      tags:
+        - image
+      responses:
+        200:
+          description: recurso de tipo image con id coincidente con la pasada por parámetro
+        404:
+          description: no existe o no se encuentra recurso
+      description: recupera un único recurso de tipo image
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: id del recurso que se pretende obtener

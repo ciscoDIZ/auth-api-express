@@ -6,10 +6,10 @@ const path = require('path');
 const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
-const bodyParser = require('body-parser');
 const swaggerJsdoc = require('swagger-jsdoc');
+const YAML = require('yamljs');
 const swaggerUi = require('swagger-ui-express');
-
+const specs = YAML.load('./api.yaml')
 
 const SETTINGS = dotenv.config();
 
@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(morgan('combined'));
 app.use(cors({origin: "*"}));
-const swaggerDefinition = {
+/*const swaggerDefinition = {
     openapi: '3.0.0',
     info: {
         title: 'Express API for JSONPlaceholder',
@@ -51,9 +51,9 @@ const swaggerDefinition = {
 const options = {
     swaggerDefinition,
     // Paths to files containing OpenAPI definitions
-    apis: ['./routes/*.js'],
+    apis: ['./routes/!*.js'],
 };
-const specs = swaggerJsdoc(options)
+const specs = swaggerJsdoc(options)*/
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 app.locals.env = app.get('env');
 app.locals.config = app.get('config');

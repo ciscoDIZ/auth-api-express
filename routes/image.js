@@ -9,7 +9,7 @@ const api = express.Router();
 
 api.post('/image', [login, upload], ImageController.create);
 api.get('/image/:name', ImageController.findByName);
-api.patch('/image/:id', login, ImageController.update);
+api.patch('/image/:id', [login, upload], ImageController.update);
 api.get('/image/id/:id', ImageController.findById);
 api.delete('/image/:id', login, ImageController.deleteById);
 api.get('/image', ImageController.findAll);

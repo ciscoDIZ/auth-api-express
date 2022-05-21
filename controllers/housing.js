@@ -103,7 +103,8 @@ const findAll = async (req, res) => {
                 __v: 0
             }
         });
-        const housings = await Housing.paginate({}, options)
+        console.log(query)
+        const housings = await Housing.paginate(query, options)
 
         if (!housings) {
             res.status(404).send({});
@@ -195,8 +196,13 @@ const uploadMainImage = async (req, res) => {
 const findByOwner = async (req, res) => {
     const {owner} = req.params;
     const {paginate} = Housing;
+    const {limit} = req.query;
+    const query = {
+        limit
+    }
     const options = getOptions({
-        query: {}, paginate, populate: [
+        query: query,
+        paginate, populate: [
             {
                 path: 'address',
                 select: {
