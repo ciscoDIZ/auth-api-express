@@ -3,7 +3,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
 const swaggerJsdoc = require('swagger-jsdoc');
@@ -22,7 +22,7 @@ app.set('view engine', 'pug');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 app.use(cors({origin: "*"}));
 /*const swaggerDefinition = {
     openapi: '3.0.0',
