@@ -4,7 +4,7 @@ info:
   title: Viviendas reales
   description: descripción de la API.
   version: 1.0.0
-host: https://auth-api-express-nodejs.herokuapp.com/
+host: localhost:5000
 
 basePath: /api
 
@@ -651,9 +651,8 @@ paths:
           description: recurso actualizado con éxito
         404:
           description: recurso no encontrado
-      description:
-        actualiza de manera parcial el recurso de tipo image que coincide con el parámetro id pasado por la
-        query de la petición
+      description: actualiza de manera parcial el recurso de tipo image que coincide con el parámetro id pasado por la
+                   query de la petición
       parameters:
         - name: id
           type: string
