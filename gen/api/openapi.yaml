@@ -1,0 +1,631 @@
+openapi: 3.0.1
+info:
+  description: API description in Markdown.
+  title: Sample API
+  version: 1.0.0
+servers:
+- url: http://localhost/api
+paths:
+  /user:
+    get:
+      description: devuelve un único usuario
+      parameters:
+      - description: página a la que accede la petición
+        in: query
+        name: page
+        schema:
+          type: string
+      - description: cantidad de recursos máximos devueltos
+        in: query
+        name: limit
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: Success
+        "400":
+          content: {}
+          description: Bad request
+      tags:
+      - user
+      x-accepts: application/json
+    post:
+      description: crea un nuevo usuario
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object'
+        content:
+          '*/*':
+            schema:
+              properties:
+                name:
+                  type: string
+                surname:
+                  type: string
+                email:
+                  type: string
+                residence:
+                  type: string
+                password:
+                  type: string
+                avatar:
+                  type: string
+                role:
+                  enum:
+                  - user
+                  - admin
+                  type: string
+              required:
+              - email
+              - name
+              - password
+              - surname
+              type: object
+        description: datos que representan al nuevo usuario
+        required: false
+      responses:
+        "201":
+          content: {}
+          description: Created
+        "400":
+          content: {}
+          description: Bad request
+      tags:
+      - user
+      x-codegen-request-body-name: user
+      x-contentType: '*/*'
+      x-accepts: application/json
+  /user/{id}:
+    get:
+      description: Get all Employee
+      parameters:
+      - description: Create an new employee
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: Success
+        "400":
+          content: {}
+          description: Bad request
+      tags:
+      - user
+      x-accepts: application/json
+    patch:
+      description: actualiza el avatar del usuario cuya id coincide con la pasada
+        po parámetro
+      parameters:
+      - description: ObjectID del usuario a borrar
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: token que autentica al usuario que realiza la petición
+        in: header
+        name: token
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: Success
+        "400":
+          content: {}
+          description: Bad request
+      tags:
+      - user
+      x-accepts: application/json
+    put:
+      description: Borra un usuario cuya id coincide con la pasada po parámetro
+      parameters:
+      - description: ObjectID del usuario a borrar
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: Success
+        "400":
+          content: {}
+          description: Bad request
+      tags:
+      - user
+      x-accepts: application/json
+  /email/{email}:
+    get:
+      description: busca un usuario cuyo email coincide con el pasado por parámetro
+      parameters:
+      - description: email del usuario que buscar
+        in: path
+        name: email
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: Success
+        "400":
+          content: {}
+          description: Bad request
+      tags:
+      - user
+      x-accepts: application/json
+  /user{id}:
+    delete:
+      description: Borra un usuario cuya id coincide con la pasada po parámetro
+      parameters:
+      - description: ObjectID del usuario a borrar
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: Success
+        "400":
+          content: {}
+          description: Bad request
+      tags:
+      - user
+      x-accepts: application/json
+  /comment:
+    get:
+      description: recupera los usuarios
+      parameters:
+      - description: página a la que accede la petición
+        in: query
+        name: page
+        schema:
+          type: string
+      - in: query
+        name: limit
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: success
+        "400":
+          content: {}
+          description: error en algún parámetro
+        "404":
+          content: {}
+          description: si no se encuentra
+      tags:
+      - comment
+      x-accepts: application/json
+    post:
+      description: crea nuevo comentario
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_1'
+        content:
+          '*/*':
+            schema:
+              properties:
+                author:
+                  type: string
+                content:
+                  type: string
+                title:
+                  type: string
+                housing:
+                  type: string
+              required:
+              - author
+              - content
+              type: object
+        description: objeto el cual contiene los datos del nuevo usuario
+        required: false
+      responses:
+        "200":
+          content: {}
+          description: Success
+        "400":
+          content: {}
+          description: Bad request
+      tags:
+      - comment
+      x-codegen-request-body-name: comment
+      x-contentType: '*/*'
+      x-accepts: application/json
+  /comment/{id}:
+    delete:
+      parameters:
+      - description: id del recurse el cual se pretende borrar
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "203":
+          content: {}
+          description: cuando se ha borrado
+        "404":
+          content: {}
+          description: si no existe el recurso
+      tags:
+      - comment
+      x-accepts: application/json
+    get:
+      description: recupera los datos de un comentario el cual coincide con l id que
+        se pasa por parámetro
+      parameters:
+      - description: id del comentario al cual se pretende acceder
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: success
+      tags:
+      - comment
+      x-accepts: application/json
+    patch:
+      description: actualiza el recurso correspondiente a la id pasada por parámetro
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "201":
+          content: {}
+          description: si se actualiza
+        "400":
+          content: {}
+          description: en caso de error
+        "404":
+          content: {}
+          description: si no existe el recurso
+      tags:
+      - comment
+      x-accepts: application/json
+  /comment/like/{id}:
+    patch:
+      description: crea nuevo comentario
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_2'
+        content:
+          '*/*':
+            schema:
+              properties:
+                author:
+                  type: string
+                content:
+                  type: string
+                title:
+                  type: string
+                housing:
+                  type: string
+              required:
+              - author
+              - content
+              type: object
+        description: objeto el cual contiene los datos del nuevo usuario
+        required: false
+      responses:
+        "201":
+          content: {}
+          description: si se actualiza el recurso
+        "400":
+          content: {}
+          description: si hay algún error en la consulta
+        "404":
+          content: {}
+          description: si el recurso al que se pretende acceder no existe
+      tags:
+      - comment
+      x-codegen-request-body-name: comment
+      x-contentType: '*/*'
+      x-accepts: application/json
+  /comment/like/remove/{id}:
+    patch:
+      description: crea nuevo comentario
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_3'
+        content:
+          '*/*':
+            schema:
+              properties:
+                author:
+                  type: string
+                content:
+                  type: string
+                title:
+                  type: string
+                housing:
+                  type: string
+              required:
+              - author
+              - content
+              type: object
+        description: objeto el cual contiene los datos del nuevo usuario
+        required: false
+      responses:
+        "201":
+          content: {}
+          description: si se actualiza el recurso
+        "400":
+          content: {}
+          description: si hay algún error en la consulta
+        "404":
+          content: {}
+          description: si el recurso al que se pretende acceder no existe
+      tags:
+      - comment
+      x-codegen-request-body-name: comment
+      x-contentType: '*/*'
+      x-accepts: application/json
+  /auth:
+    patch:
+      description: autentica usuario ya registrado
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_5'
+        content:
+          '*/*':
+            schema:
+              properties:
+                payload:
+                  $ref: '#/components/schemas/_auth_payload'
+              type: object
+        description: objeto el cual contiene los credenciales del usuario a autenticar
+        required: false
+      responses:
+        "200":
+          content: {}
+          description: si el usuario es autenticado
+        "400":
+          content: {}
+          description: en caso de no ser autenticado
+      tags:
+      - auth
+      x-codegen-request-body-name: payload
+      x-contentType: '*/*'
+      x-accepts: application/json
+    put:
+      description: autentica usuario ya registrado
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_4'
+        content:
+          '*/*':
+            schema:
+              properties:
+                id:
+                  type: string
+                password:
+                  type: string
+              type: object
+        description: objeto el cual contiene los credenciales del usuario a autenticar
+        required: false
+      responses:
+        "200":
+          content: {}
+          description: a
+        "400":
+          content: {}
+          description: a
+      tags:
+      - auth
+      x-codegen-request-body-name: credentials
+      x-contentType: '*/*'
+      x-accepts: application/json
+  /auth/{id}:
+    patch:
+      description: activa cuenta de usuario ya registrado
+      parameters:
+      - description: id del usuario el cual se pretende activar
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: a
+        "400":
+          content: {}
+          description: a
+      tags:
+      - auth
+      x-accepts: application/json
+  /housing:
+    get:
+      description: obtiene el un conjunto de recursos paginados
+      parameters:
+      - description: limite de los recursos obtenidos
+        in: query
+        name: limit
+        schema:
+          type: number
+      - description: página actual
+        in: query
+        name: page
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: success
+        "404":
+          content: {}
+          description: no existe el documento en base de datos
+      tags:
+      - housing
+      x-accepts: application/json
+    post:
+      description: crea una nueva vivienda
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: object
+        required: true
+      responses:
+        "201":
+          content: {}
+          description: recurso creado
+        "400":
+          content: {}
+          description: faltan atributos requeridos
+      tags:
+      - housing
+      x-codegen-request-body-name: housing
+      x-contentType: '*/*'
+      x-accepts: application/json
+components:
+  requestBodies:
+    inline_object_1:
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/inline_object_1'
+      required: false
+    inline_object:
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/inline_object'
+      required: false
+    inline_object_5:
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/inline_object_5'
+      required: false
+    inline_object_4:
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/inline_object_4'
+      required: false
+    inline_object_3:
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/inline_object_3'
+      required: false
+    inline_object_2:
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/inline_object_2'
+      required: false
+  schemas:
+    inline_object_1:
+      properties:
+        author:
+          type: string
+        content:
+          type: string
+        title:
+          type: string
+        housing:
+          type: string
+      required:
+      - author
+      - content
+      type: object
+    _auth_payload:
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      type: object
+    inline_object:
+      properties:
+        name:
+          type: string
+        surname:
+          type: string
+        email:
+          type: string
+        residence:
+          type: string
+        password:
+          type: string
+        avatar:
+          type: string
+        role:
+          enum:
+          - user
+          - admin
+          type: string
+      required:
+      - email
+      - name
+      - password
+      - surname
+      type: object
+    inline_object_5:
+      properties:
+        payload:
+          $ref: '#/components/schemas/_auth_payload'
+      type: object
+    inline_object_4:
+      properties:
+        id:
+          type: string
+        password:
+          type: string
+      type: object
+    inline_object_3:
+      properties:
+        author:
+          type: string
+        content:
+          type: string
+        title:
+          type: string
+        housing:
+          type: string
+      required:
+      - author
+      - content
+      type: object
+    inline_object_2:
+      properties:
+        author:
+          type: string
+        content:
+          type: string
+        title:
+          type: string
+        housing:
+          type: string
+      required:
+      - author
+      - content
+      type: object
+x-original-swagger-version: "2.0"
+

@@ -13,7 +13,7 @@ const {badRequest, internalServerError, notFound} = require('../error');
 async function getFileName(file, res) {
     const [, fileName] = file.path.split('/');
     const [, extension] = fileName.split('.');
-    if (extension !== 'jpg' && extension !== 'png') {
+    if (extension !== 'jpg' && extension !== 'jpeg' && extension !== 'png') {
         await unlink(file.path);
         res.status(400).send(badRequest('la extensión debe ser .png o .jpg'));
         return undefined;
@@ -39,6 +39,9 @@ const create = async (req, res) => {
         return;
     }
     const fileName = await getFileName(file, res);
+    if (!fileName) {
+        return;
+    }
     const apiUri = `${protocol}://${headers.host}/api/image/${fileName}`;
     const imageData = {
         title,
@@ -135,7 +138,10 @@ const findAll = async (req, res) => {
     const { paginate } = Image;
     const query = {
         page,
-        limit
+        limit,
+        order: {
+            createdAd: -1
+        }
     }
     const options = getOptions({query, paginate});
     console.log(req.query)
