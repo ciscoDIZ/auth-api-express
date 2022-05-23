@@ -4,6 +4,7 @@ info:
   title: Viviendas reales
   description: descripción de la API.
   version: 1.0.0
+
 host: https://auth-api-express-nodejs.herokuapp.com
 
 basePath: /api

@@ -43,7 +43,7 @@ const findById = async (req, res) => {
             .findById(id)
             .populate(
                 [
-                    {path: 'address', select: {_id: 0, __v: 0}},
+                    {path: 'address', select: {_id: 1, __v: 0}},
                     {path: 'images', options: {limit: 5}},
                     {path: 'mainImage', select: ['apiUri', 'id']},
                     {path: 'comments', populate: [{path: 'author'}]},
@@ -67,7 +67,7 @@ const findAll = async (req, res) => {
                 {
                     path: 'address',
                     select: {
-                        _id: 0,
+                        _id: 1,
                         __v: 0
                     },
                 },
@@ -124,11 +124,11 @@ const update = async (req, res) => {
             surface,
             price
         }
-        console.log(address._id);
+        console.log('address id: ' + address._id);
 
         const updateAddress = await Address.findByIdAndUpdate(address._id, address, {new: true});
         console.log(updateAddress)
-        const updatedHousing = await Housing.findByIdAndUpdate(id, housing, {new: true}).populate([{path: 'address'}, {path: 'owner'}]);
+        const updatedHousing = await Housing.findByIdAndUpdate(id, housing, {new: true}).populate([{path: 'address'}, {path: 'owner'}, {path: 'mainImage'}]);
 
         if (!updatedHousing) {
             res.status(404).send(notFound('Housing', id));

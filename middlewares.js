@@ -15,7 +15,7 @@ const response = (res, status, send) => {
 const login = async (req, res, next) => {
     const reqId = req.query.id;
     if (!req.headers.authorization) {
-        response(res, 401, 'no authorized');
+        response(res, 401, 'no authorized cant find headers');
         return;
     }
     const [prefix, token] = req.headers.authorization.split(' ')
