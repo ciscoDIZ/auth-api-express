@@ -3,7 +3,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
-const morgan = require('morgan');
+//const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
 const YAML = require('yamljs');
@@ -21,7 +21,7 @@ app.set('view engine', 'pug');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use(morgan('combined'));
+//app.use(morgan('combined'));
 app.use(cors());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
