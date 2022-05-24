@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use(morgan('combined'));
-app.use(cors({origin: "*"}));
+app.use(cors());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 app.locals.env = app.get('env');
