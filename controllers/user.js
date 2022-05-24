@@ -9,7 +9,7 @@ const {User} = require('../models/user');
 const {Housing} = require('../models/housing');
 const getOptions = require('../utils/pagination');
 const {notFound, internalServerError, badRequest} = require('../error');
-
+const cloudinary = require('../config/cloudinary');
 const create = (req, res) => {
     const {protocol, headers} = req;
     const {SALT_ROUND, SALT_MINOR} = req.app.locals.config
@@ -225,17 +225,23 @@ const uploadAvatar = async (req, res) => {
                 res.status(400).send(badRequest('la extensión debe ser .png o .jpg'));
                 return;
             }
+            await cloudinary.uploader.upload(
+                req.files.file.path,
+                {},
+                async (err, callResult) => {
 
-            user.avatar = `${protocol}://${headers.host}/api/avatar/${fileName}`;
+                    user.avatar = callResult.secure_url;
 
-            const updatedUser = await User.findByIdAndUpdate(id, user, {new: true});
-            res.status(201).send(updatedUser);
+                    const updatedUser = await User.findByIdAndUpdate(id, user, {new: true});
+                    res.status(201).send(updatedUser);
+            });
+
         }
     } catch (e) {
         res.status(500).send(internalServerError(e));
     }
 };
-const s = ''
+
 const getAvatar = (req, res) => {
     const {name} = req.params;
     const filePath = `./uploads/${name}`;

@@ -1,6 +1,8 @@
 "use strict";
 
 const multipart = require('connect-multiparty');
+const multer = require('multer');
+const util = require('util');
 
 const { User } = require('./models/user');
 const { decode } = require('./services/jwt');
@@ -11,6 +13,19 @@ const upload = multipart({uploadDir: './uploads'});
 const response = (res, status, send) => {
     res.status(status).send({message: send});
 };
+
+const fileSize = 2 * 1024 * 1024;
+
+const processFile = multer(
+    {
+        storage: multer.memoryStorage(),
+        limits: {
+            fileSize
+        }
+    }
+).single('file');
+
+const processFileMiddleware = util.promisify(processFile);
 
 const login = async (req, res, next) => {
     const reqId = req.query.id;
@@ -65,5 +80,6 @@ const auth = async (req, res, next) => {
 module.exports = {
     login,
     upload,
-    auth
+    auth,
+    processFileMiddleware
 };

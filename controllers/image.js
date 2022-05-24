@@ -8,7 +8,7 @@ const { Image } = require('../models/image');
 const { persist } = require('../services/image');
 const getOptions = require('../utils/pagination');
 const {badRequest, internalServerError, notFound} = require('../error');
-
+const cloudinary = require('../config/cloudinary')
 
 async function getFileName(file, res) {
     const [, fileName] = file.path.split('/');
@@ -20,7 +20,16 @@ async function getFileName(file, res) {
     }
     return fileName;
 }
-
+const fileStorage = (req, res) => {
+    console.log(req.files)
+    cloudinary.uploader.upload(req.files.file.path, {}, (err, callResult) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log(callResult)
+    })
+    res.status(200).send(req.files.file);
+};
 const create = async (req, res) => {
     const { file } = req.files;
     const { title, housing } = req.body;
@@ -42,18 +51,26 @@ const create = async (req, res) => {
     if (!fileName) {
         return;
     }
-    const apiUri = `${protocol}://${headers.host}/api/image/${fileName}`;
-    const imageData = {
-        title,
-        housing,
-        apiUri
-    }
-    try {
-        const image = await persist(imageData);
-        res.status(200).send(image);
-    }catch (e) {
-        res.status(500).send(internalServerError(e));
-    }
+    await cloudinary.uploader.upload(file.path, {}, async (err, callResult) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err);
+            return;
+        }
+        const apiUri = callResult.secure_url;
+        const imageData = {
+            title,
+            housing,
+            apiUri
+        }
+        try {
+            const image = await persist(imageData);
+            res.status(200).send(image);
+        }catch (e) {
+            res.status(500).send(internalServerError(e));
+        }
+    })
+
 
 };
 
@@ -74,30 +91,30 @@ const update = async (req, res) => {
   const { title } = req.body;
   const { file } = req.files;
   const { protocol, headers } = req;
-  try {
-      if (!file) {
-          res.status(400).send(badRequest('se debe subir fichero'));
-          return;
-      }
-      const fileName = getFileName(file, res);
-      const apiUri = `${protocol}://${headers.host}/api/image/${fileName}`;
-      const imageData = {
-          title,
-          apiUri
-      }
-      const updatedImage = await Image.findByIdAndUpdate(id, imageData, {new: true});
-      if (!updatedImage) {
-          res.status(404).send(notFound("Image", id));
-          return;
-      }
-      res.status(200).send(updatedImage);
-  }catch (e) {
-      if (e.name === 'CastError') {
-          res.status(400).send(badRequest(e))
-          return;
-      }
-      res.status(500).send(internalServerError(e));
-  }
+    await cloudinary.uploader.upload(file.path,
+        {},
+        async (err, callResult) => {
+        try {
+            const apiUri = callResult.secure_url;
+            const imageData = {
+                title,
+                apiUri
+            }
+            const updatedImage = await Image.findByIdAndUpdate(id, imageData, {new: true});
+            if (!updatedImage) {
+                res.status(404).send(notFound("Image", id));
+                return;
+            }
+            res.status(200).send(updatedImage);
+        }catch (e) {
+            if (e.name === 'CastError') {
+                res.status(400).send(badRequest(e))
+                return;
+            }
+            res.status(500).send(internalServerError(e));
+        }
+    })
+
 };
 
 const findById = async (req, res) => {
@@ -163,5 +180,6 @@ module.exports = {
     update,
     findById,
     deleteById,
-    findAll
+    findAll,
+    fileStorage
 };

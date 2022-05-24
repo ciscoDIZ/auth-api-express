@@ -6,7 +6,7 @@ const {persist} = require('../services/image');
 const getOptions = require('../utils/pagination');
 const {internalServerError, notFound, badRequest} = require('../error');
 const {User} = require("../models/user");
-
+const cloudinary = require('../config/cloudinary');
 
 const create = async (req, res) => {
     const {body} = req;
@@ -170,21 +170,31 @@ const uploadMainImage = async (req, res) => {
                 res.status(400).send(badRequest('la extensión debe ser .png o .jpg'));
                 return;
             }
-            const imageData = {
-                title: body.title,
-                apiUri: `${protocol}://${headers.host}/api/image/${fileName}`,
-                housing: id,
-            }
+            await cloudinary.uploader.upload(
+                req.files.file.path,
+                {},
+                async (err, callResult) => {
+                    if (err) {
+                        res.status(400).send(err);
+                        return;
+                    }
+                    const imageData = {
+                        title: body.title,
+                        apiUri: callResult.secure_url,
+                        housing: id,
+                    }
 
-            const savedImage = await persist(imageData);
-            const updatedHousing = await Housing.findByIdAndUpdate(id, {mainImage: savedImage.id}, {new: true})
-                .populate({path: 'mainImage', select: 'apiUri'});
-            if (!updatedHousing) {
-                res.status(404).send(notFound('Housing', id));
-                return;
-            }
-            res.status(200).send(updatedHousing);
-            return;
+                    const savedImage = await persist(imageData);
+                    const updatedHousing = await Housing.findByIdAndUpdate(id, {mainImage: savedImage.id}, {new: true})
+                        .populate({path: 'mainImage', select: 'apiUri'});
+                    if (!updatedHousing) {
+                        res.status(404).send(notFound('Housing', id));
+                        return;
+                    }
+                    res.status(200).send(updatedHousing);
+                }
+            )
+
         } catch (e) {
             res.status(500).send(internalServerError(e));
             return;
