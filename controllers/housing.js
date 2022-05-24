@@ -163,17 +163,18 @@ const uploadMainImage = async (req, res) => {
     const {protocol, headers, body} = req;
     console.log(req.files.file)
     if (req.files.file) {
-        try {
-            const [, fileName] = req.files.file.path.split('/');
-            const [, ext] = fileName.split('.');
-            if (ext !== 'png' && ext !== 'jpg' && ext !== 'jpeg') {
-                res.status(400).send(badRequest('la extensión debe ser .png o .jpg'));
-                return;
-            }
-            await cloudinary.uploader.upload(
-                req.files.file.path,
-                {},
-                async (err, callResult) => {
+        await cloudinary.uploader.upload(
+            req.files.file.path,
+            {},
+            async (err, callResult) => {
+                try {
+                    const [, fileName] = req.files.file.path.split('/');
+                    const [, ext] = fileName.split('.');
+                    if (ext !== 'png' && ext !== 'jpg' && ext !== 'jpeg') {
+                        res.status(400).send(badRequest('la extensión debe ser .png o .jpg'));
+                        return;
+                    }
+
                     if (err) {
                         res.status(400).send(err);
                         return;
@@ -192,15 +193,14 @@ const uploadMainImage = async (req, res) => {
                         return;
                     }
                     res.status(200).send(updatedHousing);
-                }
-            )
 
-        } catch (e) {
-            res.status(500).send(internalServerError(e));
-            return;
-        }
+
+                } catch (e) {
+                    res.status(500).send(internalServerError(e));
+                }
+            }
+        )
     }
-    res.status(400).send(badRequest('se debe subir fichero'))
 };
 
 const findByOwner = async (req, res) => {
@@ -275,7 +275,10 @@ const addLike = async (req, res) => {
             res.status(404).send(notFound('User', userId));
             return;
         }
-        const housing = await Housing.findById(id).populate([{path: 'address'}, {path: 'mainImage'}, {path: 'images', options: {limit: 5}}]);
+        const housing = await Housing.findById(id).populate([{path: 'address'}, {path: 'mainImage'}, {
+            path: 'images',
+            options: {limit: 5}
+        }]);
         if (!housing) {
             res.status(404).send(notFound('Housing', userId));
             return;
@@ -294,7 +297,10 @@ const removeLike = async (req, res) => {
     const {userId} = req.body;
     try {
         const user = await User.findById(userId);
-        const housing = await Housing.findById(id).populate([{path: 'address'},{path: 'mainImage'}, {path: 'images', options:{limit: 5}}]);
+        const housing = await Housing.findById(id).populate([{path: 'address'}, {path: 'mainImage'}, {
+            path: 'images',
+            options: {limit: 5}
+        }]);
         if (!housing) {
             res.status(404).send(notFound('Housing', userId));
             return;
